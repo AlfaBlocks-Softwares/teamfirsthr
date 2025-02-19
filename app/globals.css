@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-primary: #051984;
+  --bg-secondary: white;
+  --bg-muted: gray;
+
+  --black: black;
+  --primary: #051984;
+  --secondary: white;
+  --muted: gray;
+  --caption: gray;
+  --destructive: red;
+}
+
+.dark {
+  --bg-primary: white;
+  --bg-secondary: #051984;
+  --bg-muted: gray;
+
+  --black: black;
+  --primary: white;
+  --secondary: #051984;
+  --muted: gray;
+  --caption: gray;
+  --destructive: red;
+}
