@@ -12,7 +12,7 @@ const buttonVariants = cva(
         primary:
           "!bg-primary !text-secondary !font-bold hover:!text-secondary hover:!bg-primary hover:!border-none",
         secondary:
-          "!bg-secondary !text-primary border-2 border-primary hover:!text-primary hover:!bg-secondary hover:!border-primary",
+          "!bg-secondary !text-primary !font-bold !border-2 !border-primary hover:!text-primary hover:!bg-secondary hover:!border-primary",
         muted:
           "!bg-muted !text-muted  hover:!text-muted hover:!bg-muted hover:!border-none",
       },

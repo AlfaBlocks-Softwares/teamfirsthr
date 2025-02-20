@@ -13,10 +13,10 @@ export const DashboardNavItems: IDashboardNavItems[] = [
     ),
   },
   {
-    key: "/profile",
+    key: "/dashboard/profile",
     icon: <HomeOutlined />,
     label: (
-      <Link href="/profile" className="!text-secondary">
+      <Link href="/dashboard/profile" className="!text-secondary">
         profile
       </Link>
     ),

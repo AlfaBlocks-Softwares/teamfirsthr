@@ -4,7 +4,7 @@ import { Typography } from "antd";
 
 export default function LoginSignUpSideBar() {
   return (
-    <section className="w-[600px] h-[70vh] bg-primary flex flex-col justify-start items-center gap-spacing-l rounded-2xl">
+    <section className="hidden md:flex max-w-[35rem] h-[70vh] bg-primary flex-col justify-start items-center gap-spacing-l rounded-2xl p-spacing-l">
       <Typography.Title
         level={3}
         className="mt-spacing-xxl !text-secondary text-wrap text-center"

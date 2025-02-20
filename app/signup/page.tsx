@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function SignUp() {
   return (
-    <main className="h-screen w-screen flex flex-row justify-center items-center gap-[100px]">
+    <main className="h-screen w-screen flex flex-row justify-center items-center gap-[5rem] px-spacing-xl">
       <SignUpForm></SignUpForm>
       <LoginSignUpSideBar></LoginSignUpSideBar>
     </main>

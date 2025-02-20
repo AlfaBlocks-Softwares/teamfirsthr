@@ -27,3 +27,31 @@
   --caption: gray;
   --destructive: red;
 }
+
+.ant-menu .ant-menu-item {
+  width: 100% !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  transition: all 0.2s !important;
+  z-index: 1111 !important;
+}
+
+.ant-menu .ant-menu-item-selected {
+  border-top-left-radius: 20px !important;
+  border-bottom-left-radius: 20px !important;
+  background: var(--bg-secondary) !important;
+  color: var(--primary) !important;
+}
+
+.ant-menu .ant-menu-item-selected a {
+  color: var(--primary) !important;
+}
+
+.ant-menu .ant-menu-item svg {
+  color: var(--secondary) !important;
+  margin-right: 0.75rem !important;
+}
+
+.ant-menu .ant-menu-item-selected svg {
+  color: var(--primary) !important;
+}
