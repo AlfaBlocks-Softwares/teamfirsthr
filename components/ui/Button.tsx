@@ -5,7 +5,7 @@ import { cn } from "@/utils";
 import { cva, type VariantProps } from "class-variance-authority";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center !rounded-xl !text-md !font-medium  focus:!outline-none disabled:!pointer-events-none disabled:!opacity-50 !h-[50px] hover:!opacity-70",
+  "inline-flex items-center justify-center !rounded-xl !text-md !font-medium  focus:!outline-none disabled:!pointer-events-none !h-[50px] hover:!opacity-70",
   {
     variants: {
       variant: {

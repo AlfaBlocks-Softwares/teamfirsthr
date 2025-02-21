@@ -1,3 +1,4 @@
+import EmployeeDashboard from "@/components/employee/dashboard/EmployeeDashboard";
 import { Metadata } from "next";
 import React from "react";
 
@@ -6,7 +7,7 @@ export const metadata: Metadata = {
 };
 
 const Dashboard = () => {
-  return <div>Dashboard</div>;
+  return <EmployeeDashboard />;
 };
 
 export default Dashboard;

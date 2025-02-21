@@ -15,7 +15,7 @@
   --destructive: red;
 }
 
-.dark {
+/* .dark {
   --bg-primary: white;
   --bg-secondary: #051984;
   --bg-muted: gray;
@@ -26,7 +26,7 @@
   --muted: gray;
   --caption: gray;
   --destructive: red;
-}
+} */
 
 .ant-menu .ant-menu-item {
   width: 100% !important;
