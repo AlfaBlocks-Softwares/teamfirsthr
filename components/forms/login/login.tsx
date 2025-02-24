@@ -1,6 +1,8 @@
 "use client";
 import Button from "@/components/ui/Button";
 import { Ilogin } from "@/types";
+import { ZodValidator } from "@/utils";
+import { loginFormSchema } from "@/validations";
 import { Form, Input } from "antd";
 import { Typography } from "antd";
 import Link from "next/link";
@@ -32,6 +34,12 @@ export default function LoginForm() {
           label="PHONE NUMBER"
           name="phone"
           className="!text-black !font-bold"
+          rules={[
+            ZodValidator({
+              schema: loginFormSchema.pick({ phone: true }),
+              fieldName: "phone",
+            }),
+          ]}
         >
           <Input
             placeholder="Enter your phone number"
@@ -43,6 +51,12 @@ export default function LoginForm() {
           label="PASSWORD"
           name="password"
           className="!text-black !font-bold"
+          rules={[
+            ZodValidator({
+              schema: loginFormSchema.pick({ password: true }),
+              fieldName: "password",
+            }),
+          ]}
         >
           <Input
             type="password"
@@ -50,7 +64,7 @@ export default function LoginForm() {
             className="!h-[40px] !border-2 !border-gray-500"
           />
         </Form.Item>
-        <Button htmlType="submit" className="!w-full">
+        <Button htmlType="submit" className="!w-full mt-spacing-s">
           Sign Up
         </Button>
       </Form>

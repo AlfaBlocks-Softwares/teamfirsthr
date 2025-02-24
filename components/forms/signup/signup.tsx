@@ -1,6 +1,8 @@
 "use client";
 import Button from "@/components/ui/Button";
 import { ISignUp } from "@/types";
+import { ZodValidator } from "@/utils";
+import { signUpFormSchema } from "@/validations";
 import { Form, Input } from "antd";
 import { Typography } from "antd";
 import Link from "next/link";
@@ -32,6 +34,12 @@ export default function SignUpForm() {
           name="name"
           label="FULL NAME"
           className="!text-black !font-bold"
+          rules={[
+            ZodValidator({
+              schema: signUpFormSchema.pick({ name: true }),
+              fieldName: "name",
+            }),
+          ]}
         >
           <Input
             placeholder="Enter your name"
@@ -43,6 +51,12 @@ export default function SignUpForm() {
           label="PHONE NUMBER"
           name="phone"
           className="!text-black !font-bold"
+          rules={[
+            ZodValidator({
+              schema: signUpFormSchema.pick({ phone: true }),
+              fieldName: "phone",
+            }),
+          ]}
         >
           <Input
             placeholder="Enter your phone number"
@@ -54,6 +68,12 @@ export default function SignUpForm() {
           label="PASSWORD"
           name="password"
           className="!text-black !font-bold"
+          rules={[
+            ZodValidator({
+              schema: signUpFormSchema.pick({ password: true }),
+              fieldName: "password",
+            }),
+          ]}
         >
           <Input
             type="password"
@@ -61,7 +81,7 @@ export default function SignUpForm() {
             className="!h-[40px] !border-2 !border-gray-500"
           />
         </Form.Item>
-        <Button htmlType="submit" className="!w-full">
+        <Button htmlType="submit" className="!w-full mt-spacing-s">
           Sign Up
         </Button>
       </Form>
