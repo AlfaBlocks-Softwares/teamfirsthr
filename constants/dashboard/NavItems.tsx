@@ -22,11 +22,11 @@ export const DashboardNavItems: IDashboardNavItems[] = [
     ),
   },
   {
-    key: "/dashboard/leave",
+    key: "/dashboard/management",
     icon: <HomeOutlined />,
     label: (
-      <Link href="/dashboard/leave" className="!text-secondary">
-        Leave
+      <Link href="/dashboard/management" className="!text-secondary">
+        Management
       </Link>
     ),
   },
