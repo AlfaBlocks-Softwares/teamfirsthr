@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import ColumnContainer from "./ColumnContainer";
 import {
   DndContext,
@@ -75,10 +75,138 @@ function KanbanBoard() {
     })
   );
 
-  function cancelAddColumn() {
+  const cancelAddColumn = () => {
     setNewColumnTitle("");
     setIsAddingColumn(false);
-  }
+  };
+
+  const addColumn = () => {
+    if (!newColumnTitle.trim()) return;
+
+    const newColumn: IColumn = {
+      id: nanoid(),
+      title: newColumnTitle.trim(),
+    };
+
+    setColumns([...columns, newColumn]);
+    setNewColumnTitle("");
+    setIsAddingColumn(false);
+  };
+
+  const createTask = (columnId: string) => {
+    const newTask: ITask = {
+      id: nanoid(),
+      columnID: columnId,
+      title: addTaskInput.title,
+      description: addTaskInput.description,
+    };
+
+    setTasks((prevTasks) => [...prevTasks, newTask]);
+    setCreateTaskDialog(false);
+    setAddTaskInput({ title: "", description: "" });
+  };
+
+  const deleteTask = useCallback((id: string) => {
+    setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
+  }, []);
+
+  const updateTask = useCallback(
+    (id: string, content: { title: string; description: string }) => {
+      setTasks((prevTasks) =>
+        prevTasks.map((task) => {
+          if (task.id !== id) return task;
+          return { ...task, ...content };
+        })
+      );
+    },
+    []
+  );
+
+  const updateColumn = useCallback((id: string, title: string) => {
+    setColumns((prevColumns) =>
+      prevColumns.map((col) => {
+        if (col.id !== id) return col;
+        return { ...col, title };
+      })
+    );
+  }, []);
+
+  const onDragStart = useCallback((event: DragStartEvent) => {
+    if (event.active.data.current?.type === "Column") {
+      setActiveColumn(event.active.data.current.column);
+      return;
+    }
+
+    if (event.active.data.current?.type === "Task") {
+      setActiveTask(event.active.data.current.task);
+      return;
+    }
+  }, []);
+
+  const onDragEnd = useCallback((event: DragEndEvent) => {
+    setActiveColumn(null);
+    setActiveTask(null);
+
+    const { active, over } = event;
+    if (!over) return;
+
+    const activeId = active.id;
+    const overId = over.id;
+
+    if (activeId === overId) return;
+
+    const isActiveAColumn = active.data.current?.type === "Column";
+    if (!isActiveAColumn) return;
+
+    setColumns((columns) => {
+      const activeColumnIndex = columns.findIndex((col) => col.id === activeId);
+      const overColumnIndex = columns.findIndex((col) => col.id === overId);
+
+      return arrayMove(columns, activeColumnIndex, overColumnIndex);
+    });
+  }, []);
+
+  const onDragOver = useCallback((event: DragOverEvent) => {
+    const { active, over } = event;
+    if (!over) return;
+
+    const activeId = active.id;
+    const overId = over.id;
+
+    if (activeId === overId) return;
+
+    const isActiveATask = active.data.current?.type === "Task";
+    const isOverATask = over.data.current?.type === "Task";
+
+    if (!isActiveATask) return;
+
+    if (isActiveATask && isOverATask) {
+      setTasks((tasks) => {
+        const activeIndex = tasks.findIndex((t) => t.id === activeId);
+        const overIndex = tasks.findIndex((t) => t.id === overId);
+
+        if (tasks[activeIndex].columnID !== tasks[overIndex].columnID) {
+          tasks[activeIndex].columnID = tasks[overIndex].columnID;
+          return arrayMove(tasks, activeIndex, overIndex - 1);
+        }
+
+        return arrayMove(tasks, activeIndex, overIndex);
+      });
+    }
+
+    const isOverAColumn = over.data.current?.type === "Column";
+
+    if (isActiveATask && isOverAColumn) {
+      setTasks((tasks) => {
+        const activeIndex = tasks.findIndex((t) => t.id === activeId);
+        const taskToUpdate = tasks[activeIndex];
+        if (taskToUpdate) {
+          taskToUpdate.columnID = String(overId);
+        }
+        return arrayMove(tasks, activeIndex, activeIndex);
+      });
+    }
+  }, []);
 
   return (
     <DndContext
@@ -107,7 +235,8 @@ function KanbanBoard() {
                 tasks={tasks.filter((task) => task.columnID === col.id)}
               />
             ))}
-            <div className="h-max min-w-[270px] rounded-xl flex flex-col overflow-y-auto overflow-x-hidden border-2 border-primary bg-neutral-100 relative p-spacing-xs">
+
+            <div className="h-max min-w-[300px] rounded-xl flex flex-col overflow-y-auto overflow-x-hidden border-2 border-primary bg-neutral-100 relative p-spacing-xs">
               {!isAddingColumn ? (
                 <div
                   className="flex gap-spacing-xxs cursor-pointer"
@@ -173,134 +302,6 @@ function KanbanBoard() {
       )}
     </DndContext>
   );
-
-  function addColumn() {
-    if (!newColumnTitle.trim()) return;
-
-    const newColumn: IColumn = {
-      id: nanoid(),
-      title: newColumnTitle.trim(),
-    };
-
-    setColumns([...columns, newColumn]);
-    setNewColumnTitle("");
-    setIsAddingColumn(false);
-  }
-
-  function createTask(columnId: string) {
-    const newTask: ITask = {
-      id: nanoid(),
-      columnID: columnId,
-      title: addTaskInput.title,
-      description: addTaskInput.description,
-    };
-
-    setTasks((prevTasks) => [...prevTasks, newTask]);
-    setCreateTaskDialog(false);
-    setAddTaskInput({ title: "", description: "" });
-  }
-
-  function deleteTask(id: string) {
-    setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
-  }
-
-  function updateTask(
-    id: string,
-    content: { title: string; description: string }
-  ) {
-    setTasks((prevTasks) =>
-      prevTasks.map((task) => {
-        if (task.id !== id) return task;
-        return { ...task, ...content };
-      })
-    );
-  }
-
-  function updateColumn(id: string, title: string) {
-    setColumns((prevColumns) =>
-      prevColumns.map((col) => {
-        if (col.id !== id) return col;
-        return { ...col, title };
-      })
-    );
-  }
-
-  function onDragStart(event: DragStartEvent) {
-    if (event.active.data.current?.type === "Column") {
-      setActiveColumn(event.active.data.current.column);
-      return;
-    }
-
-    if (event.active.data.current?.type === "Task") {
-      setActiveTask(event.active.data.current.task);
-      return;
-    }
-  }
-
-  function onDragEnd(event: DragEndEvent) {
-    setActiveColumn(null);
-    setActiveTask(null);
-
-    const { active, over } = event;
-    if (!over) return;
-
-    const activeId = active.id;
-    const overId = over.id;
-
-    if (activeId === overId) return;
-
-    const isActiveAColumn = active.data.current?.type === "Column";
-    if (!isActiveAColumn) return;
-
-    setColumns((columns) => {
-      const activeColumnIndex = columns.findIndex((col) => col.id === activeId);
-      const overColumnIndex = columns.findIndex((col) => col.id === overId);
-
-      return arrayMove(columns, activeColumnIndex, overColumnIndex);
-    });
-  }
-
-  function onDragOver(event: DragOverEvent) {
-    const { active, over } = event;
-    if (!over) return;
-
-    const activeId = active.id;
-    const overId = over.id;
-
-    if (activeId === overId) return;
-
-    const isActiveATask = active.data.current?.type === "Task";
-    const isOverATask = over.data.current?.type === "Task";
-
-    if (!isActiveATask) return;
-
-    if (isActiveATask && isOverATask) {
-      setTasks((tasks) => {
-        const activeIndex = tasks.findIndex((t) => t.id === activeId);
-        const overIndex = tasks.findIndex((t) => t.id === overId);
-
-        if (tasks[activeIndex].columnID !== tasks[overIndex].columnID) {
-          tasks[activeIndex].columnID = tasks[overIndex].columnID;
-          return arrayMove(tasks, activeIndex, overIndex - 1);
-        }
-
-        return arrayMove(tasks, activeIndex, overIndex);
-      });
-    }
-
-    const isOverAColumn = over.data.current?.type === "Column";
-
-    if (isActiveATask && isOverAColumn) {
-      setTasks((tasks) => {
-        const activeIndex = tasks.findIndex((t) => t.id === activeId);
-        const taskToUpdate = tasks[activeIndex];
-        if (taskToUpdate) {
-          taskToUpdate.columnID = String(overId);
-        }
-        return arrayMove(tasks, activeIndex, activeIndex);
-      });
-    }
-  }
 }
 
-export default KanbanBoard;
+export default memo(KanbanBoard);

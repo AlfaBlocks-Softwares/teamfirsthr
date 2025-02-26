@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { memo, useState } from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { DeleteFilled } from "@ant-design/icons";
 import { CSS } from "@dnd-kit/utilities";
@@ -78,4 +78,4 @@ const TaskCard: React.FC<Props> = ({ task, deleteTask }) => {
   );
 };
 
-export default TaskCard;
+export default memo(TaskCard);

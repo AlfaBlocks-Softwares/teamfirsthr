@@ -1,7 +1,7 @@
 "use client";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { useState } from "react";
+import { memo, useState } from "react";
 import TaskCard from "./TaskCard";
 import TaskModal from "./AddTaskModal";
 import { PlusOutlined } from "@ant-design/icons";
@@ -80,14 +80,20 @@ export const ColumnContainer: React.FC<Props> = ({
   };
 
   if (isDragging) {
-    return <div ref={setNodeRef} style={style}></div>;
+    return (
+      <div
+        ref={setNodeRef}
+        style={style}
+        className="w-[300px] rounded-md flex flex-col"
+      ></div>
+    );
   }
 
   return (
     <div
       ref={setNodeRef}
       style={style}
-      className="h-max min-w-[270px] rounded-xl flex flex-col overflow-y-auto overflow-x-hidden border-2 border-primary bg-neutral-100 relative"
+      className="h-max min-w-[300px] rounded-xl flex flex-col overflow-y-auto overflow-x-hidden border-2 border-primary bg-neutral-100 relative"
     >
       <div
         {...attributes}
@@ -152,4 +158,4 @@ export const ColumnContainer: React.FC<Props> = ({
   );
 };
 
-export default ColumnContainer;
+export default memo(ColumnContainer);
