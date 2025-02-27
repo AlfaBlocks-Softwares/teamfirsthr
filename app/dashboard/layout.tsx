@@ -2,13 +2,13 @@
 import React, { useEffect, useState } from "react";
 import { Layout, Menu } from "antd";
 import { usePathname } from "next/navigation";
-import { DashboardNavItems } from "@/constants";
 const { Header, Sider, Content } = Layout;
 import {
   CloseCircleOutlined,
   LoginOutlined,
   MenuOutlined,
 } from "@ant-design/icons";
+import GetNavItems from "@/constants/dashboard/NavItems";
 
 interface Props {
   children: React.ReactNode;
@@ -53,7 +53,7 @@ const MainLayout: React.FC<Props> = ({ children }) => {
           <Menu
             selectedKeys={[pathname]}
             className="!bg-primary !text-secondary !font-bold !pl-0"
-            items={DashboardNavItems}
+            items={GetNavItems()}
           />
         </Sider>
       )}
@@ -88,7 +88,7 @@ const MainLayout: React.FC<Props> = ({ children }) => {
           <Menu
             selectedKeys={[pathname]}
             className="!bg-primary !text-secondary !font-bold !pl-0"
-            items={DashboardNavItems}
+            items={GetNavItems()}
           />
         </nav>
       )}

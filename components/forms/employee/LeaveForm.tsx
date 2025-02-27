@@ -29,7 +29,7 @@ export default function EmployeeLeaveForm() {
     <section className="p-spacing-l">
       <div className="flex flex-col justify-start items-start gap-spacing-s">
         <Typography.Title level={2} className="!p-0 !m-0">
-          Employee Leave Form
+          Leave Form
         </Typography.Title>
         <Typography.Title level={5} className="!text-caption !p-0 !m-0">
           You have 15 leaves remaining
