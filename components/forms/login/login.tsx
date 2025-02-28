@@ -5,7 +5,6 @@ import { ZodValidator } from "@/utils";
 import { loginFormSchema } from "@/validations";
 import { Form, Input } from "antd";
 import { Typography } from "antd";
-import Link from "next/link";
 
 export default function LoginForm() {
   const onFinish = (values: Ilogin) => {
@@ -68,9 +67,6 @@ export default function LoginForm() {
           Sign Up
         </Button>
       </Form>
-      <Typography.Title level={5} className="!text-caption !text-center">
-        Don&apos;t have an account? <Link href={"/signup"}>Sign Up</Link>
-      </Typography.Title>
     </section>
   );
 }
