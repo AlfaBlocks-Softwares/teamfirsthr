@@ -1,8 +1,8 @@
 import EmployeeLeaveFrom from "@/components/forms/employee/LeaveForm";
 import React from "react";
 
-const EmployeeLeave = () => {
+const LeaveFormPage = () => {
   return <EmployeeLeaveFrom></EmployeeLeaveFrom>;
 };
 
-export default EmployeeLeave;
+export default LeaveFormPage;

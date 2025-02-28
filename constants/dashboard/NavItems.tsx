@@ -6,7 +6,7 @@ import { ROLE } from "../role";
 const GetNavItems = () => {
   const userData = {
     name: "Muneeb",
-    role: "manager",
+    role: "hr",
   };
 
   const DashboardNavItems: IDashboardNavItems[] = [
@@ -48,13 +48,25 @@ const GetNavItems = () => {
     },
   ];
 
-  if (userData.role === ROLE.MANAGER) {
+  if (userData.role === ROLE.MANAGER || userData?.role === ROLE.HR) {
     DashboardNavItems.push({
       key: "/dashboard/leave-management",
       icon: <HomeOutlined />,
       label: (
         <Link href="/dashboard/leave-management" className="!text-secondary">
           Leave Management
+        </Link>
+      ),
+    });
+  }
+
+  if (userData?.role === ROLE.HR) {
+    DashboardNavItems.push({
+      key: "/dashboard/create-new-user",
+      icon: <HomeOutlined />,
+      label: (
+        <Link href="/dashboard/create-new-user" className="!text-secondary">
+          New User
         </Link>
       ),
     });

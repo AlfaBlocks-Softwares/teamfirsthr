@@ -3,8 +3,8 @@ import React from "react";
 
 const KanbanBoard = dynamic(() => import("@/components/kanban/KanbanBoard"));
 
-const EmployeeWorkManagement = () => {
+const WorkManagement = () => {
   return <KanbanBoard />;
 };
 
-export default EmployeeWorkManagement;
+export default WorkManagement;

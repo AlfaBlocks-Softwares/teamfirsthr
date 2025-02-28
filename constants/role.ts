@@ -4,4 +4,19 @@ export const ROLE = {
   HR: "hr",
 };
 
+export const ROLEOptions = [
+  {
+    label: "EMPLOYEE",
+    value: "employee",
+  },
+  {
+    label: "MANAGER",
+    value: "manager",
+  },
+  {
+    label: "HR",
+    value: "hr",
+  },
+];
+
 export type Role = (typeof ROLE)[keyof typeof ROLE];
