@@ -3,7 +3,7 @@ import LoginSignUpSideBar from "@/components/ui/LoginSignUpSideBar";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "SignUp - TeamFirstHR",
+  title: "Login - TeamFirstHR",
 };
 
 export default function Login() {

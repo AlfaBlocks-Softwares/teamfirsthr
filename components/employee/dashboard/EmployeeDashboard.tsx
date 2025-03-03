@@ -1,8 +1,10 @@
+"use client";
 import React from "react";
 import EmployeePersonalInformation from "./PersonalInformation";
 import EmployeeAnnouncements from "./Announcements";
 import EmployeeTaskSummary from "./TaskSummary";
 import EmployeeQuickActions from "./QuickActions";
+import withAuth from "@/hoc/withAuth";
 
 const EmployeeDashboard = () => {
   return (
@@ -19,4 +21,4 @@ const EmployeeDashboard = () => {
   );
 };
 
-export default EmployeeDashboard;
+export default withAuth(EmployeeDashboard);

@@ -1,5 +1,6 @@
 "use client";
 import Button from "@/components/ui/Button";
+import { useLoginMutation } from "@/redux/apis";
 import { Ilogin } from "@/types";
 import { ZodValidator } from "@/utils";
 import { loginFormSchema } from "@/validations";
@@ -7,8 +8,12 @@ import { Form, Input } from "antd";
 import { Typography } from "antd";
 
 export default function LoginForm() {
-  const onFinish = (values: Ilogin) => {
-    console.log("Received values of form: ", values);
+  const [login, { isLoading }] = useLoginMutation();
+
+  console.log(isLoading);
+
+  const onFinish = async (values: Ilogin) => {
+    await login({ email: values?.email, password: values?.password });
   };
 
   return (
@@ -20,7 +25,7 @@ export default function LoginForm() {
         level={5}
         className="!text-center !text-caption !mb-spacing-m"
       >
-        Enter your phone number and password below
+        Enter your email and password below
       </Typography.Title>
       <Form
         name="login"
@@ -30,18 +35,18 @@ export default function LoginForm() {
         layout="vertical"
       >
         <Form.Item
-          label="PHONE NUMBER"
-          name="phone"
+          label="EMAIL"
+          name="email"
           className="!text-black !font-bold"
           rules={[
             ZodValidator({
-              schema: loginFormSchema.pick({ phone: true }),
-              fieldName: "phone",
+              schema: loginFormSchema.pick({ email: true }),
+              fieldName: "email",
             }),
           ]}
         >
           <Input
-            placeholder="Enter your phone number"
+            placeholder="Enter your email"
             className="!h-[40px] !border-2 !border-gray-500"
           />
         </Form.Item>
@@ -63,8 +68,12 @@ export default function LoginForm() {
             className="!h-[40px] !border-2 !border-gray-500"
           />
         </Form.Item>
-        <Button htmlType="submit" className="!w-full mt-spacing-s">
-          Sign Up
+        <Button
+          htmlType="submit"
+          className="!w-full mt-spacing-s"
+          loading={isLoading}
+        >
+          Sign In
         </Button>
       </Form>
     </section>

@@ -20,6 +20,14 @@ const MainLayout: React.FC<Props> = ({ children }) => {
     window?.innerWidth < 768 ? true : false
   );
   const pathname = usePathname();
+  // const router = useRouter();
+  // const isAuthenticated = false;
+
+  // useEffect(() => {
+  //   if (!isAuthenticated) {
+  //     router.replace("/login");
+  //   }
+  // }, [isAuthenticated, router]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -38,6 +46,9 @@ const MainLayout: React.FC<Props> = ({ children }) => {
   const showNavbar = () => {
     setCollapsed(!collapsed);
   };
+
+  // if (!isAuthenticated) return null;
+
   return (
     <Layout className="max-w-screen h-[100dvh] flex flex-row justify-center items-center !bg-primary">
       {!isMobile && (
