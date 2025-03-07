@@ -1,15 +1,15 @@
-import LoginForm from "@/components/forms/login/login";
+import SetUpPasswordForm from "@/components/forms/setpassword/setpassword";
 import LoginSignUpSideBar from "@/components/ui/LoginSignUpSideBar";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Login - TeamFirstHR",
+  title: "Set Password - TeamFirstHR",
 };
 
 export default function Login() {
   return (
     <main className="h-screen w-screen flex flex-row justify-center items-center gap-[5rem] px-spacing-xl">
-      <LoginForm></LoginForm>
+      <SetUpPasswordForm />
       <LoginSignUpSideBar></LoginSignUpSideBar>
     </main>
   );

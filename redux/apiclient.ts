@@ -1,9 +1,8 @@
 import axios from "axios";
 import { store } from "./store";
-import { logout } from "./slices/auth/authSlice";
 
 const API = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: "http://localhost:5001/api/",
   headers: { "Content-Type": "application/json" },
 });
 
@@ -41,8 +40,6 @@ API.interceptors.response.use(
         return API(originalRequest);
       } catch (refreshError) {
         console.log(refreshError);
-
-        store.dispatch(logout());
       }
     }
     return Promise.reject(error);

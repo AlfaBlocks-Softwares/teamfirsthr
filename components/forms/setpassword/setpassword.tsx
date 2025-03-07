@@ -1,63 +1,46 @@
 "use client";
 import Button from "@/components/ui/Button";
-import { useLoginMutation } from "@/redux/apis";
-import { Ilogin } from "@/types";
+import { useSetupPasswordMutation } from "@/redux/apis";
+import { ISetupPassword } from "@/types";
 import { ZodValidator } from "@/utils";
-import { loginFormSchema } from "@/validations";
+import { passwordSchema } from "@/validations";
 import { Form, Input } from "antd";
 import { Typography } from "antd";
 import { useRouter } from "next/navigation";
 
-export default function LoginForm() {
-  const [login, { isLoading }] = useLoginMutation();
+export default function SetUpPasswordForm() {
+  const [setUpPassword, { isLoading }] = useSetupPasswordMutation();
   const router = useRouter();
 
-  const onFinish = async (values: Ilogin) => {
-    await login({ email: values?.email, password: values?.password, router });
+  const onFinish = async (values: ISetupPassword) => {
+    await setUpPassword({ password: values?.password, router });
   };
 
   return (
     <section>
       <Typography.Title level={4} className="!text-center">
-        Log In to Admin Panel
+        Set Up your account password
       </Typography.Title>
       <Typography.Title
         level={5}
         className="!text-center !text-caption !mb-spacing-m"
       >
-        Enter your email and password below
+        Enter new password and confirm password below
       </Typography.Title>
       <Form
-        name="login"
+        name="setuppassword"
         initialValues={{ remember: true }}
         onFinish={onFinish}
         className="!my-spacing-l"
         layout="vertical"
       >
         <Form.Item
-          label="EMAIL"
-          name="email"
-          className="!text-black !font-bold"
-          rules={[
-            ZodValidator({
-              schema: loginFormSchema.pick({ email: true }),
-              fieldName: "email",
-            }),
-          ]}
-        >
-          <Input
-            placeholder="Enter your email"
-            className="!h-[40px] !border-2 !border-gray-500"
-          />
-        </Form.Item>
-
-        <Form.Item
           label="PASSWORD"
           name="password"
           className="!text-black !font-bold"
           rules={[
             ZodValidator({
-              schema: loginFormSchema.pick({ password: true }),
+              schema: passwordSchema.pick({ password: true }),
               fieldName: "password",
             }),
           ]}
@@ -73,7 +56,7 @@ export default function LoginForm() {
           className="!w-full mt-spacing-s"
           loading={isLoading}
         >
-          Sign In
+          Submit
         </Button>
       </Form>
     </section>

@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Layout, Menu } from "antd";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 const { Header, Sider, Content } = Layout;
 import {
   CloseCircleOutlined,
@@ -9,17 +9,23 @@ import {
   MenuOutlined,
 } from "@ant-design/icons";
 import GetNavItems from "@/constants/dashboard/NavItems";
+import { useSelector } from "react-redux";
+import { selectUser } from "@/redux/selectors";
+import { useLogoutMutation } from "@/redux/apis";
 
 interface Props {
   children: React.ReactNode;
 }
 
 const MainLayout: React.FC<Props> = ({ children }) => {
+  const user = "Alice";
   const [collapsed, setCollapsed] = useState(false);
   const [isMobile, setIsMobile] = useState(
     window?.innerWidth < 768 ? true : false
   );
   const pathname = usePathname();
+  const router = useRouter();
+  // const [logout] = useLogoutMutation();
   // const router = useRouter();
   // const isAuthenticated = false;
 
@@ -49,6 +55,10 @@ const MainLayout: React.FC<Props> = ({ children }) => {
 
   // if (!isAuthenticated) return null;
 
+  const handleLogout = async () => {
+    // await logout({ router });
+  };
+
   return (
     <Layout className="max-w-screen h-[100dvh] flex flex-row justify-center items-center !bg-primary">
       {!isMobile && (
@@ -59,7 +69,9 @@ const MainLayout: React.FC<Props> = ({ children }) => {
           className="!bg-primary min-h-screen"
         >
           <div className="py-6 px-4 flex items-center">
-            <span className="text-secondary text-lg font-bold">User</span>
+            <span className="text-secondary text-lg font-bold">
+              {user?.first_name ?? ""}
+            </span>
           </div>
           <Menu
             selectedKeys={[pathname]}
@@ -77,9 +89,12 @@ const MainLayout: React.FC<Props> = ({ children }) => {
           <div className="flex !justify-center !items-center !gap-spacing-s">
             <MenuOutlined style={{ fontSize: "30px" }} onClick={showNavbar} />
             <h2>Good Morning</h2>
-            <h3>Muneeb</h3>
+            <h3>{user?.first_name ?? ""}</h3>
           </div>
-          <LoginOutlined style={{ fontSize: "30px" }} />
+          <LoginOutlined
+            style={{ fontSize: "30px", cursor: "Pointer" }}
+            onClick={handleLogout}
+          />
         </Header>
         <Content className="overflow-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] mt-spacing-l">
           {children}
@@ -89,7 +104,9 @@ const MainLayout: React.FC<Props> = ({ children }) => {
       {isMobile && !collapsed && (
         <nav className="w-[300px] !bg-primary min-h-screen fixed left-0 top-0 bottom-0 z-20 transition-all duration-300">
           <div className="py-6 px-4 flex justify-between items-center">
-            <span className="text-secondary text-lg font-bold">User</span>
+            <span className="text-secondary text-lg font-bold">
+              {user?.first_name ?? ""}
+            </span>
             <CloseCircleOutlined
               style={{ fontSize: "30px" }}
               className="!text-secondary"

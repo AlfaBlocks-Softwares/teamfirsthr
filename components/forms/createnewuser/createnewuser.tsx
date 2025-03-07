@@ -1,0 +1,218 @@
+"use client";
+import Button from "@/components/ui/Button";
+import {
+  DepartmentOptions,
+  EmployementStatusOptions,
+  MaritalStatusOptions,
+  ROLEOptions,
+} from "@/constants";
+import { useAddNewUserMutation } from "@/redux/apis";
+import { IEmployeeProfile } from "@/types";
+// import { ZodValidator } from "@/utils";
+// import { signUpFormSchema } from "@/validations";
+import { DatePicker, Form, Input, Select } from "antd";
+import { Typography } from "antd";
+
+export default function CreateNewUserForm() {
+  const [addNewUser, { isLoading }] = useAddNewUserMutation();
+
+  const onFinish = async (values: IEmployeeProfile) => {
+    console.log("Received values of form: ", values);
+    await addNewUser({ ...values });
+  };
+
+  return (
+    <div className="!w-full !h-full">
+      <Typography.Title level={4}>Create New User</Typography.Title>
+      <Form
+        name="signup"
+        initialValues={{ remember: true }}
+        onFinish={onFinish}
+        className="!w-full !h-full !p-spacing-l"
+        layout="vertical"
+      >
+        <div className="w-full !grid !grid-cols-2 justify-start items-start gap-spacing-m">
+          <Form.Item
+            label="First Name"
+            name="first_name"
+            className="!text-black !font-bold"
+          >
+            <Input placeholder="Enter your first name" className="!h-[40px] " />
+          </Form.Item>
+
+          <Form.Item
+            label="Last Name"
+            name="last_name"
+            className="!text-black !font-bold"
+          >
+            <Input placeholder="Enter your last name" className="!h-[40px] " />
+          </Form.Item>
+
+          <Form.Item
+            label="Email"
+            name="email"
+            className="!text-black !font-bold"
+          >
+            <Input
+              type="email"
+              placeholder="Enter your email"
+              className="!h-[40px] "
+            />
+          </Form.Item>
+
+          <Form.Item
+            label="Position"
+            name="position"
+            className="!text-black !font-bold"
+          >
+            <Input placeholder="position" className="!h-[40px] " />
+          </Form.Item>
+
+          <Form.Item
+            label="Department"
+            name="department"
+            className="!text-black !font-bold"
+          >
+            <Select
+              placeholder="Select department"
+              options={DepartmentOptions}
+              className="!h-[40px]"
+            />
+          </Form.Item>
+
+          <Form.Item
+            label="User Role"
+            name="role"
+            className="!text-black !font-bold"
+          >
+            <Select
+              placeholder="Select role"
+              options={ROLEOptions}
+              className="!h-[40px]"
+            />
+          </Form.Item>
+
+          <Form.Item
+            label="Company"
+            name="company"
+            className="!text-black !font-bold"
+          >
+            <Input placeholder="company" className="!h-[40px] " />
+          </Form.Item>
+
+          <Form.Item
+            label="Marital Status"
+            name="marital_status"
+            className="!text-black !font-bold"
+          >
+            <Select
+              placeholder="Select marital status"
+              options={MaritalStatusOptions}
+              className="!h-[40px]"
+            />
+          </Form.Item>
+
+          <Form.Item
+            label="Date of Birth"
+            name="date_of_birth"
+            className="!text-black !font-bold"
+          >
+            <DatePicker name="date_of_birth" className="!w-full" />
+          </Form.Item>
+
+          <Form.Item
+            label="Phone Number"
+            name="phone_number"
+            className="!text-black !font-bold"
+          >
+            <Input placeholder="Phone Number" className="!h-[40px] " />
+          </Form.Item>
+
+          <Form.Item
+            label="Salary"
+            name="salary"
+            className="!text-black !font-bold"
+          >
+            <Input placeholder="salary" className="!h-[40px] " />
+          </Form.Item>
+
+          <Form.Item
+            label="Address"
+            name="address"
+            className="!text-black !font-bold"
+          >
+            <Input placeholder="Address" className="!h-[40px] " />
+          </Form.Item>
+
+          <Form.Item
+            label="Employment Status"
+            name="employment_status"
+            className="!text-black !font-bold"
+          >
+            <Select
+              placeholder="Select employement status"
+              options={EmployementStatusOptions}
+              className="!h-[40px]"
+            />
+          </Form.Item>
+
+          <Form.Item
+            label="Date joined"
+            name="date_joined"
+            className="!text-black !font-bold"
+          >
+            <DatePicker name="date_joined" className="!w-full" />
+          </Form.Item>
+
+          <Form.Item
+            label="Manager"
+            name="manager"
+            className="!text-black !font-bold"
+          >
+            <Input placeholder="Manager" className="!h-[40px] " />
+          </Form.Item>
+
+          <Form.Item
+            label="Emergency Contact Name"
+            name="emergency_name"
+            className="!text-black !font-bold"
+          >
+            <Input
+              placeholder="Enter your emergency contact name"
+              className="!h-[40px] "
+            />
+          </Form.Item>
+
+          <Form.Item
+            label="Emergency Phone Number"
+            name="emergency_phone"
+            className="!text-black !font-bold"
+          >
+            <Input
+              placeholder="Enter your emergency phone number"
+              className="!h-[40px] "
+            />
+          </Form.Item>
+
+          <Form.Item
+            label="Emergency Contact Relation"
+            name="emergency_contact"
+            className="!text-black !font-bold"
+          >
+            <Input
+              placeholder="Enter your emergency contact relation"
+              className="!h-[40px] "
+            />
+          </Form.Item>
+        </div>
+        <Button
+          htmlType="submit"
+          className="!w-max mt-spacing-s !px-spacing-l"
+          loading={isLoading}
+        >
+          Create
+        </Button>
+      </Form>
+    </div>
+  );
+}
