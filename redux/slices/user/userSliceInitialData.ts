@@ -2,6 +2,8 @@ import { IUser } from "@/types";
 
 export interface IUserSlice {
   user: IUser;
+  users: IUser[];
+  managers: IUser[];
 }
 export const UserInitialState: IUserSlice = {
   user: {
@@ -31,4 +33,6 @@ export const UserInitialState: IUserSlice = {
       relation: "",
     },
   },
+  users: [],
+  managers: [],
 };

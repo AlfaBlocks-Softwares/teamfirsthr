@@ -68,3 +68,21 @@ export const EmployementStatusOptions = [
 
 export type EmployementStatusType =
   (typeof Employement)[keyof typeof Employement];
+
+export const GENDER = {
+  MALE: "male",
+  FEMALE: "female",
+};
+
+export const GenderOptions = [
+  {
+    label: "MALE",
+    value: "male",
+  },
+  {
+    label: "FEMALE",
+    value: "female",
+  },
+];
+
+export type GenderType = (typeof GENDER)[keyof typeof GENDER];

@@ -3,6 +3,7 @@ import Button from "@/components/ui/Button";
 import {
   DepartmentOptions,
   EmployementStatusOptions,
+  GenderOptions,
   MaritalStatusOptions,
   ROLEOptions,
 } from "@/constants";
@@ -39,7 +40,6 @@ export default function CreateNewUserForm() {
           >
             <Input placeholder="Enter your first name" className="!h-[40px] " />
           </Form.Item>
-
           <Form.Item
             label="Last Name"
             name="last_name"
@@ -47,7 +47,6 @@ export default function CreateNewUserForm() {
           >
             <Input placeholder="Enter your last name" className="!h-[40px] " />
           </Form.Item>
-
           <Form.Item
             label="Email"
             name="email"
@@ -59,7 +58,6 @@ export default function CreateNewUserForm() {
               className="!h-[40px] "
             />
           </Form.Item>
-
           <Form.Item
             label="Position"
             name="position"
@@ -67,7 +65,6 @@ export default function CreateNewUserForm() {
           >
             <Input placeholder="position" className="!h-[40px] " />
           </Form.Item>
-
           <Form.Item
             label="Department"
             name="department"
@@ -79,9 +76,8 @@ export default function CreateNewUserForm() {
               className="!h-[40px]"
             />
           </Form.Item>
-
           <Form.Item
-            label="User Role"
+            label="Role"
             name="role"
             className="!text-black !font-bold"
           >
@@ -91,7 +87,6 @@ export default function CreateNewUserForm() {
               className="!h-[40px]"
             />
           </Form.Item>
-
           <Form.Item
             label="Company"
             name="company"
@@ -99,7 +94,6 @@ export default function CreateNewUserForm() {
           >
             <Input placeholder="company" className="!h-[40px] " />
           </Form.Item>
-
           <Form.Item
             label="Marital Status"
             name="marital_status"
@@ -111,15 +105,25 @@ export default function CreateNewUserForm() {
               className="!h-[40px]"
             />
           </Form.Item>
+          <Form.Item
+            label="Gender"
+            name="gender"
+            className="!text-black !font-bold"
+          >
+            <Select
+              placeholder="Select gender"
+              options={GenderOptions}
+              className="!h-[40px]"
+            />
+          </Form.Item>
 
           <Form.Item
             label="Date of Birth"
             name="date_of_birth"
             className="!text-black !font-bold"
           >
-            <DatePicker name="date_of_birth" className="!w-full" />
+            <DatePicker name="date_of_birth" className="!w-full !h-[40px]" />
           </Form.Item>
-
           <Form.Item
             label="Phone Number"
             name="phone_number"
@@ -127,7 +131,6 @@ export default function CreateNewUserForm() {
           >
             <Input placeholder="Phone Number" className="!h-[40px] " />
           </Form.Item>
-
           <Form.Item
             label="Salary"
             name="salary"
@@ -135,7 +138,6 @@ export default function CreateNewUserForm() {
           >
             <Input placeholder="salary" className="!h-[40px] " />
           </Form.Item>
-
           <Form.Item
             label="Address"
             name="address"
@@ -143,7 +145,6 @@ export default function CreateNewUserForm() {
           >
             <Input placeholder="Address" className="!h-[40px] " />
           </Form.Item>
-
           <Form.Item
             label="Employment Status"
             name="employment_status"
@@ -155,15 +156,13 @@ export default function CreateNewUserForm() {
               className="!h-[40px]"
             />
           </Form.Item>
-
           <Form.Item
             label="Date joined"
             name="date_joined"
             className="!text-black !font-bold"
           >
-            <DatePicker name="date_joined" className="!w-full" />
+            <DatePicker name="date_joined" className="!w-full !h-[40px]" />
           </Form.Item>
-
           <Form.Item
             label="Manager"
             name="manager"
@@ -171,7 +170,6 @@ export default function CreateNewUserForm() {
           >
             <Input placeholder="Manager" className="!h-[40px] " />
           </Form.Item>
-
           <Form.Item
             label="Emergency Contact Name"
             name="emergency_name"
@@ -182,7 +180,6 @@ export default function CreateNewUserForm() {
               className="!h-[40px] "
             />
           </Form.Item>
-
           <Form.Item
             label="Emergency Phone Number"
             name="emergency_phone"
@@ -193,7 +190,6 @@ export default function CreateNewUserForm() {
               className="!h-[40px] "
             />
           </Form.Item>
-
           <Form.Item
             label="Emergency Contact Relation"
             name="emergency_contact"

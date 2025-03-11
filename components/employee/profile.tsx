@@ -1,24 +1,88 @@
 "use client";
 import Button from "../ui/Button";
-import { Form, Input } from "antd";
+import { DatePicker, Form, Input, Select, Upload } from "antd";
 import { Typography } from "antd";
-import { IEmployeeProfile } from "@/types";
+import { IUser } from "@/types";
 import Image from "next/image";
 import defaultProfile from "@/public/profile.png";
 import { useSelector } from "react-redux";
 import { selectUser } from "@/redux/selectors";
+import { GenderOptions, MaritalStatusOptions } from "@/constants";
+import { useMemo } from "react";
+import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+import toast from "react-hot-toast";
+
+dayjs.extend(customParseFormat);
 
 export default function EmployeeProfile() {
   const user = useSelector(selectUser);
-  const onFinish = (values: IEmployeeProfile) => {
-    console.log("Received values of form: ", values);
+  const [form] = Form.useForm();
+
+  const onFinish = (values: IUser) => {
+    const payload = {
+      ...values,
+      date_joined: values.date_joined
+        ? dayjs(values?.date_joined)?.format("YYYY-MM-DDTHH:mm:ss.SSS[Z]")
+        : null,
+      date_of_birth: values.date_of_birth
+        ? dayjs(values?.date_of_birth)?.format("YYYY-MM-DDTHH:mm:ss.SSS[Z]")
+        : null,
+      date_terminated: values.date_terminated
+        ? dayjs(values?.date_terminated)?.format("YYYY-MM-DDTHH:mm:ss.SSS[Z]")
+        : null,
+    };
+
+    console.log("Final Payload: ", payload);
+  };
+
+  const initialValues = useMemo(() => {
+    return {
+      ...user,
+      date_joined: user?.date_joined
+        ? dayjs(user.date_joined, "YYYY-MM-DD")
+        : null,
+      date_of_birth: user?.date_of_birth
+        ? dayjs(user.date_of_birth, "YYYY-MM-DD")
+        : null,
+      date_terminated: user?.date_terminated
+        ? dayjs(user.date_terminated, "YYYY-MM-DD")
+        : null,
+    };
+  }, [user]);
+
+  const handleResetForm = () => {
+    form.resetFields();
+  };
+
+  const beforeUpload = (file: File) => {
+    const isImage = file.type.startsWith("image/");
+    const maxSize = 3 * 1024 * 1024; //3MB
+
+    if (!isImage) {
+      toast.error("You can only upload image files!");
+      return Upload.LIST_IGNORE;
+    }
+
+    if (file.size > maxSize) {
+      toast.error("Image size must be 3MB or less!");
+      return Upload.LIST_IGNORE;
+    }
+
+    return true;
+  };
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleUpload = ({ file }: { file: any }) => {
+    console.log(file);
   };
 
   return (
     <section className="!w-full !h-full">
       <Form
+        form={form}
         name="profile"
-        initialValues={{ remember: true }}
+        initialValues={initialValues}
         onFinish={onFinish}
         className="!my-spacing-l !grid !grid-cols-1 sm:!grid-cols-2 gap-spacing-l"
         layout="vertical"
@@ -35,7 +99,12 @@ export default function EmployeeProfile() {
           <Button variant="primary" size="md" htmlType="submit">
             Save change
           </Button>
-          <Button variant="secondary" size="md">
+          <Button
+            variant="secondary"
+            size="md"
+            htmlType="button"
+            onClick={handleResetForm}
+          >
             Cancel
           </Button>
         </div>
@@ -62,8 +131,16 @@ export default function EmployeeProfile() {
           </div>
 
           <div className="mr-spacing-l flex gap-spacing-m self-end">
-            <Button>Change</Button>
-            <Button variant="secondary">Delete</Button>
+            <Upload
+              showUploadList={false}
+              customRequest={handleUpload}
+              beforeUpload={beforeUpload}
+            >
+              <Button>Change</Button>
+            </Upload>
+            <Button variant="secondary" htmlType="button">
+              Delete
+            </Button>
           </div>
         </div>
 
@@ -128,7 +205,11 @@ export default function EmployeeProfile() {
           name="gender"
           className="!text-black !font-bold"
         >
-          <Input placeholder="gender" className="!h-[40px] " />
+          <Select
+            placeholder="Select gender"
+            options={GenderOptions}
+            className="!h-[40px]"
+          />
         </Form.Item>
 
         <Form.Item
@@ -136,7 +217,11 @@ export default function EmployeeProfile() {
           name="marital_status"
           className="!text-black !font-bold"
         >
-          <Input placeholder="Marital Status" className="!h-[40px] " />
+          <Select
+            placeholder="Select marital status"
+            options={MaritalStatusOptions}
+            className="!h-[40px]"
+          />
         </Form.Item>
 
         <Form.Item
@@ -144,7 +229,7 @@ export default function EmployeeProfile() {
           name="date_of_birth"
           className="!text-black !font-bold"
         >
-          <Input placeholder="Date of Birth" className="!h-[40px] " />
+          <DatePicker className="!w-full !h-[40px]" format={"DD-MM-YYYY"} />
         </Form.Item>
 
         <Form.Item
@@ -186,9 +271,14 @@ export default function EmployeeProfile() {
         <Form.Item
           label="Date joined"
           name="date_joined"
-          className="!text-black !font-bold"
+          className="!text-black !font-bold !w-full"
         >
-          <Input placeholder="Date Joined" className="!h-[40px] " disabled />
+          <DatePicker
+            placeholder="Date Joined"
+            className="!h-[40px] !w-full"
+            disabled
+            format={"DD-MM-YYYY"}
+          />
         </Form.Item>
 
         <Form.Item
@@ -196,12 +286,12 @@ export default function EmployeeProfile() {
           name="manager"
           className="!text-black !font-bold"
         >
-          <Input placeholder="Manager" className="!h-[40px] " disabled />
+          <Input className="!h-[40px] " disabled />
         </Form.Item>
 
         <Form.Item
           label="Emergency Contact Name"
-          name="emergency_name"
+          name={["emergency_contact", "name"]}
           className="!text-black !font-bold"
         >
           <Input
@@ -212,7 +302,7 @@ export default function EmployeeProfile() {
 
         <Form.Item
           label="Emergency Phone Number"
-          name="emergency_phone"
+          name={["emergency_contact", "phone"]}
           className="!text-black !font-bold"
         >
           <Input
@@ -223,11 +313,11 @@ export default function EmployeeProfile() {
 
         <Form.Item
           label="Emergency Contact Relation"
-          name="emergency_contact"
+          name={["emergency_contact", "relation"]}
           className="!text-black !font-bold"
         >
           <Input
-            type="email"
+            type="text"
             placeholder="Enter your emergency contact relation"
             className="!h-[40px] "
           />

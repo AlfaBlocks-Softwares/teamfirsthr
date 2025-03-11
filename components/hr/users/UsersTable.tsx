@@ -5,8 +5,10 @@ import type { TableProps } from "antd";
 import type { MenuProps } from "antd";
 import { MoreOutlined } from "@ant-design/icons";
 import { IUser } from "@/types";
+// import { useGetAllUsersQuery } from "@/redux/apis";
 
 const UsersTable = () => {
+  // const { users, isLoading } = useGetAllUsersQuery();
   const [data, setData] = useState<IUser[]>([
     {
       first_name: "John",
@@ -164,6 +166,7 @@ const UsersTable = () => {
             : user
         )
       );
+      // dispatch(updateUserStatus({ email: selectedUser.email, is_active: actionType === "activate" }));
       setConfirmModalVisible(false);
     }
   };

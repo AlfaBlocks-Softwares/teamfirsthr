@@ -19,9 +19,8 @@ export const userAPI = createApi({
           const { data } = await queryFulfilled;
           dispatch(setUser(data));
         } catch (error: any) {
-          toast.error(
-            error?.error?.data?.message ?? "Failed to update profile"
-          );
+          console.log(error);
+          toast.error("Failed to update profile");
         }
       },
     }),
@@ -40,13 +39,82 @@ export const userAPI = createApi({
             toast.error("Failed to add new user");
           }
         } catch (error: any) {
-          toast.error(error?.error?.data?.message ?? "Failed to add new user");
+          console.log(error);
+          toast.error("Failed to add new user");
+        }
+      },
+    }),
+    changeProfilePicture: builder.mutation<any, any>({
+      query: (credentials) => ({
+        url: "v1/user/profile",
+        method: "PUT",
+        body: credentials,
+      }),
+      async onQueryStarted(_, { queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          if (data.code !== 200) {
+            toast.error("Failed to update profile picture");
+          }
+        } catch (error: any) {
+          console.log(error);
+          toast.error("Failed to update profile picture");
+        }
+      },
+    }),
+    deleteProfilePicture: builder.mutation<any, any>({
+      query: (credentials) => ({
+        url: "v1/user/profile",
+        method: "DELETE",
+        body: credentials,
+      }),
+      async onQueryStarted(_, { queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          if (data.code !== 200) {
+            toast.error("Failed to delete profile picture");
+          }
+        } catch (error: any) {
+          console.log(error);
+          toast.error("Failed to delete profile picture");
+        }
+      },
+    }),
+    activateDeactivateUser: builder.mutation<any, any>({
+      query: (credentials) => ({
+        url: "v1/user/activate",
+        method: "POST",
+        body: credentials,
+      }),
+      async onQueryStarted(_, { queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          if (data.code !== 200) {
+            toast.error("Failed to update status");
+          }
+        } catch (error: any) {
+          console.log(error);
+          toast.error("Failed to update status");
         }
       },
     }),
     getUserDetails: builder.query<any, void>({
       query: () => ({
         url: "v1/user/",
+        method: "GET",
+      }),
+      transformResponse: (response: any) => response,
+    }),
+    getAllUsers: builder.query<any, void>({
+      query: () => ({
+        url: "v1/user/users",
+        method: "GET",
+      }),
+      transformResponse: (response: any) => response,
+    }),
+    getAllManagers: builder.query<any, void>({
+      query: () => ({
+        url: "v1/user/managers",
         method: "GET",
       }),
       transformResponse: (response: any) => response,
@@ -58,4 +126,9 @@ export const {
   useUpdateProfileMutation,
   useGetUserDetailsQuery,
   useAddNewUserMutation,
+  useChangeProfilePictureMutation,
+  useDeleteProfilePictureMutation,
+  useActivateDeactivateUserMutation,
+  useGetAllManagersQuery,
+  useGetAllUsersQuery,
 } = userAPI;
