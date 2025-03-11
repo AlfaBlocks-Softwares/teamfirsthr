@@ -59,16 +59,7 @@ export const authAPI = createApi({
         }
       },
     }),
-    logout: builder.mutation<void, { router: any }>({
-      queryFn: () => ({ data: undefined }),
-      async onQueryStarted({ router }, { dispatch }) {
-        router.push("/");
-        dispatch(resetAuthState());
-        dispatch(resetUserState());
-      },
-    }),
   }),
 });
 
-export const { useLoginMutation, useSetupPasswordMutation, useLogoutMutation } =
-  authAPI;
+export const { useLoginMutation, useSetupPasswordMutation } = authAPI;

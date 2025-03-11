@@ -3,13 +3,13 @@ import Button from "../ui/Button";
 import { Form, Input } from "antd";
 import { Typography } from "antd";
 import { IEmployeeProfile } from "@/types";
-import { useGetUserDetailsQuery } from "@/redux/apis";
+import Image from "next/image";
+import defaultProfile from "@/public/profile.png";
+import { useSelector } from "react-redux";
+import { selectUser } from "@/redux/selectors";
 
 export default function EmployeeProfile() {
-  const { data: user, isLoading, error } = useGetUserDetailsQuery();
-
-  console.log(user, isLoading, error);
-
+  const user = useSelector(selectUser);
   const onFinish = (values: IEmployeeProfile) => {
     console.log("Received values of form: ", values);
   };
@@ -20,7 +20,7 @@ export default function EmployeeProfile() {
         name="profile"
         initialValues={{ remember: true }}
         onFinish={onFinish}
-        className="!my-spacing-l !grid !grid-cols-2 gap-spacing-l"
+        className="!my-spacing-l !grid !grid-cols-1 sm:!grid-cols-2 gap-spacing-l"
         layout="vertical"
       >
         <div className="w-full flex flex-col gap-spacing-xs">
@@ -38,6 +38,33 @@ export default function EmployeeProfile() {
           <Button variant="secondary" size="md">
             Cancel
           </Button>
+        </div>
+
+        <Typography.Title level={4} className="!p-0 !m-0">
+          Profile Picture
+        </Typography.Title>
+        <div className="mt-spacing-xs flex justify-start items-start gap-spacing-xl sm:!col-span-2 flex-wrap">
+          <div className="flex gap-spacing-s">
+            <Image
+              src={user?.profile_picture || defaultProfile}
+              alt="profile_pic"
+              className="h-[64px] w-[64px] object-contain rounded-[50%]"
+            ></Image>
+
+            <div className="flex flex-col justify-start items-start gap-spacing-xxxs">
+              <Typography.Title className="!p-0 !m-0 !text-lg !text-black">
+                {user?.first_name ?? ""}
+              </Typography.Title>
+              <Typography.Title className="!p-0 !m-0 !text-sm  !text-muted">
+                {user?.role ?? ""}
+              </Typography.Title>
+            </div>
+          </div>
+
+          <div className="mr-spacing-l flex gap-spacing-m self-end">
+            <Button>Change</Button>
+            <Button variant="secondary">Delete</Button>
+          </div>
         </div>
 
         <Form.Item

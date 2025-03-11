@@ -70,6 +70,16 @@ const GetNavItems = () => {
       </Link>
     ),
   });
+
+  DashboardNavItems.push({
+    key: "/dashboard/users",
+    icon: <HomeOutlined />,
+    label: (
+      <Link href="/dashboard/users" className="!text-secondary">
+        Users
+      </Link>
+    ),
+  });
   // }
 
   return DashboardNavItems;

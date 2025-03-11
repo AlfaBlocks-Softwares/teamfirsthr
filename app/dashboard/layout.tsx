@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Layout, Menu } from "antd";
+import { Layout, Menu, Typography } from "antd";
 import { usePathname, useRouter } from "next/navigation";
 const { Header, Sider, Content } = Layout;
 import {
@@ -9,31 +9,24 @@ import {
   MenuOutlined,
 } from "@ant-design/icons";
 import GetNavItems from "@/constants/dashboard/NavItems";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "@/redux/selectors";
-import { useLogoutMutation } from "@/redux/apis";
+import { resetAuthState } from "@/redux/slices/auth/authSlice";
+import UserProfileCard from "@/components/ui/profilecard";
 
 interface Props {
   children: React.ReactNode;
 }
 
 const MainLayout: React.FC<Props> = ({ children }) => {
-  const user = "Alice";
+  const user = useSelector(selectUser);
   const [collapsed, setCollapsed] = useState(false);
   const [isMobile, setIsMobile] = useState(
     window?.innerWidth < 768 ? true : false
   );
   const pathname = usePathname();
   const router = useRouter();
-  // const [logout] = useLogoutMutation();
-  // const router = useRouter();
-  // const isAuthenticated = false;
-
-  // useEffect(() => {
-  //   if (!isAuthenticated) {
-  //     router.replace("/login");
-  //   }
-  // }, [isAuthenticated, router]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const handleResize = () => {
@@ -53,10 +46,9 @@ const MainLayout: React.FC<Props> = ({ children }) => {
     setCollapsed(!collapsed);
   };
 
-  // if (!isAuthenticated) return null;
-
   const handleLogout = async () => {
-    // await logout({ router });
+    dispatch(resetAuthState());
+    router.push("/");
   };
 
   return (
@@ -68,11 +60,7 @@ const MainLayout: React.FC<Props> = ({ children }) => {
           collapsed={collapsed}
           className="!bg-primary min-h-screen"
         >
-          <div className="py-6 px-4 flex items-center">
-            <span className="text-secondary text-lg font-bold">
-              {user?.first_name ?? ""}
-            </span>
-          </div>
+          <UserProfileCard collapsed={collapsed} />
           <Menu
             selectedKeys={[pathname]}
             className="!bg-primary !text-secondary !font-bold !pl-0"
@@ -87,9 +75,16 @@ const MainLayout: React.FC<Props> = ({ children }) => {
       >
         <Header className="!bg-secondary !p-0 !flex !justify-between">
           <div className="flex !justify-center !items-center !gap-spacing-s">
-            <MenuOutlined style={{ fontSize: "30px" }} onClick={showNavbar} />
-            <h2>Good Morning</h2>
-            <h3>{user?.first_name ?? ""}</h3>
+            <MenuOutlined
+              style={{ fontSize: "20px", marginRight: "1rem" }}
+              onClick={showNavbar}
+            />
+            <Typography.Title level={2} className="!m-0 !p-0 !font-medium">
+              Good Morning,
+            </Typography.Title>
+            <Typography.Title level={2} className="!m-0 !p-0 !font-medium">
+              {user?.first_name ?? ""}
+            </Typography.Title>
           </div>
           <LoginOutlined
             style={{ fontSize: "30px", cursor: "Pointer" }}

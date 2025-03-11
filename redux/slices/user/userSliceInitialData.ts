@@ -1,7 +1,7 @@
-import { IEmployeeProfile } from "@/types";
+import { IUser } from "@/types";
 
 export interface IUserSlice {
-  user: IEmployeeProfile;
+  user: IUser;
 }
 export const UserInitialState: IUserSlice = {
   user: {
@@ -18,6 +18,7 @@ export const UserInitialState: IUserSlice = {
     date_of_birth: "",
     phone_number: "",
     salary: 0,
+    is_active: true,
     address: "",
     profile_picture: "",
     employment_status: "",

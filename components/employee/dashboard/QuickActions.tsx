@@ -1,5 +1,6 @@
 "use client";
 import Button from "@/components/ui/Button";
+import Link from "next/link";
 import React, { useState } from "react";
 
 const EmployeeQuickActions = () => {
@@ -36,7 +37,9 @@ const EmployeeQuickActions = () => {
       </div>
 
       <div className="lg:col-span-2 h-[150px] bg-yellow-400 rounded-lg flex flex-col justify-start items-start gap-spacing-xxs p-spacing-s">
-        <Button>Apply for a leave</Button>
+        <Link href={"/dashboard/leave"}>
+          <Button>Apply for a leave</Button>
+        </Link>
       </div>
     </section>
   );
