@@ -24,11 +24,11 @@ const userSlice = createSlice({
     builder.addMatcher(
       userAPI.endpoints.getAllUsers.matchFulfilled,
       (state, { payload }) => {
-        state.users = payload;
+        state.users = payload.data;
       }
     );
   },
 });
 
-export const { setUser, resetUserState } = userSlice.actions;
+export const { setUser, resetUserState, updateUserStatus } = userSlice.actions;
 export default userSlice.reducer;

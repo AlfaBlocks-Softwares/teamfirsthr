@@ -107,14 +107,14 @@ export const userAPI = createApi({
     }),
     getAllUsers: builder.query<any, void>({
       query: () => ({
-        url: "v1/user/users",
+        url: "v1/user/?role=all",
         method: "GET",
       }),
-      transformResponse: (response: any) => response,
+      transformResponse: (response: any) => response?.data,
     }),
-    getAllManagers: builder.query<any, void>({
-      query: () => ({
-        url: "v1/user/managers",
+    getAllManagers: builder.query<any, { id: string }>({
+      query: ({ id }) => ({
+        url: `v1/user/?managerId=${id}`,
         method: "GET",
       }),
       transformResponse: (response: any) => response,

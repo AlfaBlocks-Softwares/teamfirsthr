@@ -10,3 +10,11 @@ export interface IEmployeeLeaveForm {
   endDate: string;
   files?: File[];
 }
+
+export interface ILeave {
+  name: string;
+  designation: string;
+  from: string;
+  to: string;
+  status: string;
+}

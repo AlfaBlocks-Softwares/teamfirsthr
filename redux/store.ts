@@ -11,8 +11,13 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
+import { leaveAPI } from "./apis/leave";
 
-const apiMiddlewares = [authAPI.middleware, userAPI.middleware];
+const apiMiddlewares = [
+  authAPI.middleware,
+  userAPI.middleware,
+  leaveAPI.middleware,
+];
 
 export const store = configureStore({
   reducer: rootReducer,
