@@ -2,7 +2,7 @@ import axios from "axios";
 import { store } from "./store";
 
 const API = axios.create({
-  baseURL: "http://localhost:5001/api/",
+  baseURL: "http://localhost:5000/api/",
   headers: { "Content-Type": "application/json" },
 });
 
@@ -21,6 +21,7 @@ API.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
+
     if (
       error.response?.status === 401 &&
       !originalRequest._retry &&

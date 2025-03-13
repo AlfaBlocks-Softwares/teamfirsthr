@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Table, Tag, Typography, Dropdown, Modal, Spin } from "antd";
 import type { TableProps } from "antd";
 import type { MenuProps } from "antd";
@@ -11,6 +11,7 @@ import dayjs from "dayjs";
 import { updateUserStatus } from "@/redux/slices/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUsersList } from "@/redux/selectors";
+import UsersDetailsModal from "./UsersDetailsModal";
 
 const UsersTable = () => {
   const { isLoading } = useGetAllUsersQuery();
@@ -21,7 +22,7 @@ const UsersTable = () => {
   const [actionType, setActionType] = useState<"activate" | "deactivate">(
     "activate"
   );
-
+  const [showUserDetailsModal, setShowUserDetailsModal] = useState(false);
   const usersList = useSelector(selectUsersList);
 
   const handleStatusChange = (record: IUser, newStatus: boolean): void => {
@@ -120,6 +121,15 @@ const UsersTable = () => {
     },
   ];
 
+  const hideUserDetailsModal = useCallback(() => {
+    setShowUserDetailsModal(false);
+  }, []);
+
+  const handleRowClick = (user: IUser): void => {
+    setSelectedUser(user);
+    setShowUserDetailsModal(true);
+  };
+
   return (
     <section>
       <Typography.Title level={3}>Users</Typography.Title>
@@ -136,9 +146,19 @@ const UsersTable = () => {
           dataSource={usersList || []}
           pagination={{ pageSize: 10 }}
           rowKey="email"
+          onRow={(record) => ({
+            onClick: () => handleRowClick(record),
+          })}
         />
       )}
 
+      {showUserDetailsModal && (
+        <UsersDetailsModal
+          visible={showUserDetailsModal}
+          setVisible={hideUserDetailsModal}
+          user={selectedUser}
+        />
+      )}
       <Modal
         centered
         title={`${actionType === "activate" ? "Activate" : "Deactivate"} User`}

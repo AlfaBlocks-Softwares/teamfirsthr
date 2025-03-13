@@ -24,7 +24,7 @@ const userSlice = createSlice({
     builder.addMatcher(
       userAPI.endpoints.getAllUsers.matchFulfilled,
       (state, { payload }) => {
-        state.users = payload.data;
+        state.users = payload?.data ?? [];
       }
     );
   },

@@ -7,6 +7,7 @@ import { setUser } from "../slices/user/userSlice";
 export const userAPI = createApi({
   reducerPath: "userAPI",
   baseQuery: customBaseQuery,
+  keepUnusedDataFor: 10,
   endpoints: (builder) => ({
     updateProfile: builder.mutation<any, any>({
       query: (credentials) => ({
