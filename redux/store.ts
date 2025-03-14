@@ -12,11 +12,13 @@ import {
   REGISTER,
 } from "redux-persist";
 import { leaveAPI } from "./apis/leave";
+import { attendanceAPI } from "./apis";
 
 const apiMiddlewares = [
   authAPI.middleware,
   userAPI.middleware,
   leaveAPI.middleware,
+  attendanceAPI.middleware,
 ];
 
 export const store = configureStore({

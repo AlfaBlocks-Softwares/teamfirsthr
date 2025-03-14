@@ -1,39 +1,49 @@
 "use client";
 import Button from "@/components/ui/Button";
+import { useMarkCheckInMutation, useMarkCheckOutMutation } from "@/redux/apis";
+import { selectLoggedInUserAttendance, selectUser } from "@/redux/selectors";
+import { Typography } from "antd";
 import Link from "next/link";
-import React, { useState } from "react";
+import React from "react";
+import { useSelector } from "react-redux";
 
 const EmployeeQuickActions = () => {
-  const [isSignedIn, setIsSignedIn] = useState(false);
-  const [signInTime, setSignInTime] = useState<string | null>(null);
-  const [signOutTime, setSignOutTime] = useState<string | null>(null);
+  const [markCheckIn] = useMarkCheckInMutation();
+  const [markCheckOut] = useMarkCheckOutMutation();
+  const loggedInUserAttendance = useSelector(selectLoggedInUserAttendance);
+  const user = useSelector(selectUser);
 
-  const handleSignIn = () => {
-    const currentTime = new Date().toLocaleString();
-    setSignInTime(currentTime);
-    setIsSignedIn(true);
-    setSignOutTime(null);
+  const handleSignIn = async () => {
+    await markCheckIn({ id: user?._id });
   };
 
-  const handleSignOut = () => {
-    const currentTime = new Date().toLocaleString();
-    setSignOutTime(currentTime);
-    setIsSignedIn(false);
+  const handleSignOut = async () => {
+    await markCheckOut({ id: user?._id });
   };
 
+  const isSignInDisabled = loggedInUserAttendance?.check_in ? true : false;
+  const isSignOutDisabled = loggedInUserAttendance?.check_in ? true : false;
   return (
     <section className="w-full grid grid-cols-1 lg:grid-cols-2 gap-spacing-l">
       <div className="h-[150px] bg-yellow-400 rounded-lg flex flex-col justify-start items-start gap-spacing-xxs p-spacing-s">
-        <Button onClick={handleSignIn} disabled={isSignedIn}>
+        <Button onClick={handleSignIn} disabled={isSignInDisabled}>
           Sign In
         </Button>
-        {signInTime && <h5>Signed In at: {signInTime}</h5>}
+        {loggedInUserAttendance?.check_in && (
+          <Typography.Title level={4} className="!p-0 !m-0 !text-muted">
+            Signed In at: {loggedInUserAttendance?.check_in}
+          </Typography.Title>
+        )}
       </div>
       <div className="h-[150px] bg-yellow-400 rounded-lg flex flex-col justify-start items-start gap-spacing-xxs p-spacing-s">
-        <Button onClick={handleSignOut} disabled={!isSignedIn}>
+        <Button onClick={handleSignOut} disabled={!isSignOutDisabled}>
           Sign Out
         </Button>
-        {signOutTime && <h5>Signed Out at: {signOutTime}</h5>}
+        {loggedInUserAttendance?.check_out && (
+          <Typography.Title level={4} className="!p-0 !m-0 !text-muted">
+            Signed In at: {loggedInUserAttendance?.check_out}
+          </Typography.Title>
+        )}
       </div>
 
       <div className="lg:col-span-2 h-[150px] bg-yellow-400 rounded-lg flex flex-col justify-start items-start gap-spacing-xxs p-spacing-s">
