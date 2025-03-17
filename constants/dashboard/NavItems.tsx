@@ -80,6 +80,15 @@ const GetNavItems = () => {
       </Link>
     ),
   });
+  DashboardNavItems.push({
+    key: "/dashboard/attendance",
+    icon: <HomeOutlined />,
+    label: (
+      <Link href="/dashboard/attendance" className="!text-secondary">
+        Attendance
+      </Link>
+    ),
+  });
   // }
 
   return DashboardNavItems;

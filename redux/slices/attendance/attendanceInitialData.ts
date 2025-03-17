@@ -2,6 +2,7 @@ import { IAttendance } from "@/types";
 
 export interface IAttendanceSlice {
   individualAttendance: IAttendance;
+  individualUserAllAttendances: IAttendance[];
   allUsersAttendances: IAttendance[];
 }
 export const AttendanceInitialState: IAttendanceSlice = {
@@ -10,5 +11,6 @@ export const AttendanceInitialState: IAttendanceSlice = {
     check_in: "",
     check_out: "",
   },
+  individualUserAllAttendances: [],
   allUsersAttendances: [],
 };

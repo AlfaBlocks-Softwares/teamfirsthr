@@ -33,7 +33,13 @@ const rootReducer = combineReducers({
     userReducer
   ),
   leave: leaveReducer,
-  attendance: attendanceReducer,
+  attendance: persistReducer(
+    {
+      key: "attendance",
+      storage,
+    },
+    attendanceReducer
+  ),
   ...apiReducers,
 });
 

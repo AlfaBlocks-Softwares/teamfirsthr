@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createApi } from "@reduxjs/toolkit/query/react";
-import customBaseQuery from "./custombasequery";
+import { customBaseQuery } from "./custombasequery";
 import toast from "react-hot-toast";
 import { setLoggedInUserAttendance } from "../slices/attendance/attendanceSlice";
 
@@ -9,10 +9,9 @@ export const attendanceAPI = createApi({
   baseQuery: customBaseQuery,
   endpoints: (builder) => ({
     markCheckIn: builder.mutation<any, any>({
-      query: (credentials) => {
-        const { id } = credentials;
+      query: () => {
         return {
-          url: `v1/attendance/check-in/?${id}`,
+          url: `v1/attendance/check-in`,
           method: "POST",
         };
       },
@@ -27,10 +26,9 @@ export const attendanceAPI = createApi({
       },
     }),
     markCheckOut: builder.mutation<any, any>({
-      query: (credentials) => ({
+      query: () => ({
         url: "v1/attendance/check-out",
         method: "POST",
-        body: credentials,
       }),
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
@@ -42,9 +40,23 @@ export const attendanceAPI = createApi({
         }
       },
     }),
-    getAllAttendacne: builder.query<any, any>({
+    getLatestAttendanceofLoggedInUser: builder.query<any, void>({
       query: () => ({
-        url: `v1/leaves/`,
+        url: `v1/attendance/latest`,
+        method: "GET",
+      }),
+      transformResponse: (response: any) => response,
+    }),
+    getAllAttendanceofLoggedInUser: builder.query<any, void>({
+      query: () => ({
+        url: `v1/attendance/`,
+        method: "GET",
+      }),
+      transformResponse: (response: any) => response,
+    }),
+    getAllUsersAttendance: builder.query<any, { date: Date | string }>({
+      query: ({ date }) => ({
+        url: `v1/attendance/date?date=${date}`,
         method: "GET",
       }),
       transformResponse: (response: any) => response,
@@ -53,7 +65,9 @@ export const attendanceAPI = createApi({
 });
 
 export const {
-  useGetAllAttendacneQuery,
+  useGetAllAttendanceofLoggedInUserQuery,
+  useGetLatestAttendanceofLoggedInUserQuery,
   useMarkCheckInMutation,
   useMarkCheckOutMutation,
+  useGetAllUsersAttendanceQuery,
 } = attendanceAPI;

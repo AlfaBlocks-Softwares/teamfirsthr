@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import API from "../apiclient";
+import { API } from "../apiclient";
 
-const customBaseQuery = async ({
+export const customBaseQuery = async ({
   url,
   method = "GET",
   body,
@@ -19,5 +19,3 @@ const customBaseQuery = async ({
     };
   }
 };
-
-export default customBaseQuery;

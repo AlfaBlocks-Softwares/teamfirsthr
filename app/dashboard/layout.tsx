@@ -13,6 +13,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "@/redux/selectors";
 import { resetAuthState } from "@/redux/slices/auth/authSlice";
 import UserProfileCard from "@/components/ui/profilecard";
+import { resetUserState } from "@/redux/slices/user/userSlice";
+import { resetAttendanceState } from "@/redux/slices/attendance/attendanceSlice";
 
 interface Props {
   children: React.ReactNode;
@@ -47,8 +49,10 @@ const MainLayout: React.FC<Props> = ({ children }) => {
   };
 
   const handleLogout = async () => {
-    dispatch(resetAuthState());
     router.push("/");
+    dispatch(resetAuthState());
+    dispatch(resetUserState());
+    dispatch(resetAttendanceState());
   };
 
   return (

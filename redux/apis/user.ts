@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createApi } from "@reduxjs/toolkit/query/react";
-import customBaseQuery from "./custombasequery";
+import { customBaseQuery } from "./custombasequery";
 import toast from "react-hot-toast";
 import { setUser } from "../slices/user/userSlice";
 

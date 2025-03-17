@@ -21,9 +21,6 @@ const EmployeePersonalInformation = () => {
         <Typography.Title level={3} className="!p-0 !m-0">
           {user?.department ?? ""}
         </Typography.Title>
-        <Typography.Title level={5} className="!p-0 !text-muted !text-sm !m-0">
-          {user?.manager ?? ""}
-        </Typography.Title>
       </div>
     </div>
   );

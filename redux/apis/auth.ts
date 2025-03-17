@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { login, resetAuthState } from "../slices/auth/authSlice";
-import customBaseQuery from "./custombasequery";
+import { customBaseQuery } from "./custombasequery";
 import toast from "react-hot-toast";
 import { resetUserState, setUser } from "../slices/user/userSlice";
 
