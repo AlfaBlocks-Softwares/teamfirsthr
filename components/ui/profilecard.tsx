@@ -46,7 +46,7 @@ const UserProfileCard: React.FC<Props> = ({ collapsed }) => {
             {user?.first_name ?? ""}
           </Typography.Title>
           <Typography.Title className="!p-0 !m-0 !text-sm  !text-white">
-            {user?.role ?? ""}
+            {user?.role.toUpperCase() ?? ""}
           </Typography.Title>
         </div>
       )}

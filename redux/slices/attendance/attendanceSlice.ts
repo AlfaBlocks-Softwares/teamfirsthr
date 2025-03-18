@@ -9,6 +9,13 @@ const attendanceSlice = createSlice({
     resetAttendanceState: () => {
       return AttendanceInitialState;
     },
+    resetLoggedInUserAttendanceState: (state) => {
+      state.individualAttendance = {
+        ...state.individualAttendance,
+        check_in: "",
+        check_out: "",
+      };
+    },
     setLoggedInUserAttendance: (state, action) => {
       state.individualAttendance = action.payload;
     },
@@ -29,6 +36,9 @@ const attendanceSlice = createSlice({
   },
 });
 
-export const { setLoggedInUserAttendance, resetAttendanceState } =
-  attendanceSlice.actions;
+export const {
+  setLoggedInUserAttendance,
+  resetAttendanceState,
+  resetLoggedInUserAttendanceState,
+} = attendanceSlice.actions;
 export default attendanceSlice.reducer;

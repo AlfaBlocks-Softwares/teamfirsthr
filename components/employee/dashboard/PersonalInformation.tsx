@@ -14,7 +14,7 @@ const EmployeePersonalInformation = () => {
           {user?.first_name ?? ""}
         </Typography.Title>
         <Typography.Title level={5} className="!p-0 !text-muted !text-sm !m-0">
-          {user?.role}
+          {user?.role.toUpperCase() ?? ""}
         </Typography.Title>
       </div>
       <div className="flex flex-col gap-spacing-xxs">

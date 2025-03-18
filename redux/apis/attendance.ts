@@ -7,6 +7,7 @@ import { setLoggedInUserAttendance } from "../slices/attendance/attendanceSlice"
 export const attendanceAPI = createApi({
   reducerPath: "attendanceAPI",
   baseQuery: customBaseQuery,
+  keepUnusedDataFor: 0,
   endpoints: (builder) => ({
     markCheckIn: builder.mutation<any, any>({
       query: () => {

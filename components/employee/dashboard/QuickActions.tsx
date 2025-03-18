@@ -8,17 +8,40 @@ import {
 import { selectLoggedInUserAttendance } from "@/redux/selectors";
 import { Typography } from "antd";
 import Link from "next/link";
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
+import { resetLoggedInUserAttendanceState } from "@/redux/slices/attendance/attendanceSlice";
 
 const EmployeeQuickActions = () => {
   const [markCheckIn] = useMarkCheckInMutation();
   const [markCheckOut] = useMarkCheckOutMutation();
-
+  const dispatch = useDispatch();
   const loggedInUserAttendance = useSelector(selectLoggedInUserAttendance);
 
   useGetLatestAttendanceofLoggedInUserQuery();
+
+  useEffect(() => {
+    if (loggedInUserAttendance) {
+      const today = moment().startOf("day");
+
+      const checkInDate = loggedInUserAttendance.check_in
+        ? moment(loggedInUserAttendance.check_in).startOf("day")
+        : null;
+
+      const checkOutDate = loggedInUserAttendance.check_out
+        ? moment(loggedInUserAttendance.check_out).startOf("day")
+        : null;
+
+      if (
+        (checkInDate && checkInDate.isBefore(today)) ||
+        (checkOutDate && checkOutDate.isBefore(today))
+      ) {
+        dispatch(resetLoggedInUserAttendanceState());
+        return;
+      }
+    }
+  }, [loggedInUserAttendance]);
 
   const handleSignIn = async () => {
     await markCheckIn({});
