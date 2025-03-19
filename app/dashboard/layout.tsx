@@ -15,6 +15,7 @@ import { resetAuthState } from "@/redux/slices/auth/authSlice";
 import UserProfileCard from "@/components/ui/profilecard";
 import { resetUserState } from "@/redux/slices/user/userSlice";
 import { resetAttendanceState } from "@/redux/slices/attendance/attendanceSlice";
+import { deleteCookie } from "@/utils/cookies";
 
 interface Props {
   children: React.ReactNode;
@@ -49,10 +50,12 @@ const MainLayout: React.FC<Props> = ({ children }) => {
   };
 
   const handleLogout = async () => {
-    router.push("/");
+    await deleteCookie("auth");
+    await deleteCookie("role");
     dispatch(resetAuthState());
     dispatch(resetUserState());
     dispatch(resetAttendanceState());
+    router.replace("/");
   };
 
   return (

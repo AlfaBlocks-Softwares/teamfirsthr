@@ -1,13 +1,13 @@
+"use client";
 import { IDashboardNavItems } from "@/types/dashboardlayout";
 import { HomeOutlined } from "@ant-design/icons";
 import Link from "next/link";
-// import { ROLE } from "../role";
+import { ROLE } from "../role";
+import { useSelector } from "react-redux";
+import { selectUser } from "@/redux/selectors";
 
 const GetNavItems = () => {
-  // const userData = {
-  //   name: "Muneeb",
-  //   role: "hr",
-  // };
+  const userData = useSelector(selectUser);
 
   const DashboardNavItems: IDashboardNavItems[] = [
     {
@@ -48,38 +48,40 @@ const GetNavItems = () => {
     },
   ];
 
-  // if (userData.role === ROLE.MANAGER || userData?.role === ROLE.HR) {
-  DashboardNavItems.push({
-    key: "/dashboard/leave-management",
-    icon: <HomeOutlined />,
-    label: (
-      <Link href="/dashboard/leave-management" className="!text-secondary">
-        Leave Management
-      </Link>
-    ),
-  });
-  // }
+  if (userData.role === ROLE.MANAGER || userData?.role === ROLE.HR) {
+    DashboardNavItems.push({
+      key: "/dashboard/leave-management",
+      icon: <HomeOutlined />,
+      label: (
+        <Link href="/dashboard/leave-management" className="!text-secondary">
+          Leave Management
+        </Link>
+      ),
+    });
+  }
 
-  // if (userData?.role === ROLE.HR) {
-  DashboardNavItems.push({
-    key: "/dashboard/create-new-user",
-    icon: <HomeOutlined />,
-    label: (
-      <Link href="/dashboard/create-new-user" className="!text-secondary">
-        New User
-      </Link>
-    ),
-  });
+  if (userData?.role === ROLE.HR) {
+    DashboardNavItems.push({
+      key: "/dashboard/create-new-user",
+      icon: <HomeOutlined />,
+      label: (
+        <Link href="/dashboard/create-new-user" className="!text-secondary">
+          New User
+        </Link>
+      ),
+    });
 
-  DashboardNavItems.push({
-    key: "/dashboard/users",
-    icon: <HomeOutlined />,
-    label: (
-      <Link href="/dashboard/users" className="!text-secondary">
-        Users
-      </Link>
-    ),
-  });
+    DashboardNavItems.push({
+      key: "/dashboard/users",
+      icon: <HomeOutlined />,
+      label: (
+        <Link href="/dashboard/users" className="!text-secondary">
+          Users
+        </Link>
+      ),
+    });
+  }
+
   DashboardNavItems.push({
     key: "/dashboard/attendance",
     icon: <HomeOutlined />,
@@ -89,7 +91,6 @@ const GetNavItems = () => {
       </Link>
     ),
   });
-  // }
 
   return DashboardNavItems;
 };

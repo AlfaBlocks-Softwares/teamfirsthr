@@ -2,10 +2,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { login, resetAuthState } from "../slices/auth/authSlice";
+import { login } from "../slices/auth/authSlice";
 import { customBaseQuery } from "./custombasequery";
 import toast from "react-hot-toast";
-import { resetUserState, setUser } from "../slices/user/userSlice";
+import { setUser } from "../slices/user/userSlice";
+import { createCookie } from "@/utils/cookies";
 
 export const authAPI = createApi({
   reducerPath: "authAPI",
@@ -25,8 +26,15 @@ export const authAPI = createApi({
         try {
           const { data } = await queryFulfilled;
           if (data?.code === 200) {
+            const token = data?.data?.token?.access?.token;
+            const role = data?.data?.role;
+
+            await createCookie("role", role);
+            await createCookie("auth", token);
+
             dispatch(login(data));
             dispatch(setUser(data?.data));
+
             router && router.push("/dashboard");
           } else {
             toast.error(data?.message);
