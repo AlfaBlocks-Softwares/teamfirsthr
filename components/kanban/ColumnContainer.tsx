@@ -4,9 +4,10 @@ import { CSS } from "@dnd-kit/utilities";
 import { memo, useState } from "react";
 import TaskCard from "./TaskCard";
 import TaskModal from "./AddTaskModal";
-import { PlusOutlined } from "@ant-design/icons";
+import { MoreOutlined, PlusOutlined } from "@ant-design/icons";
 import { IColumn, ITask } from "@/types";
 import { Input, Typography } from "antd";
+import ColumnsActionsModal from "./columnsactionmodal";
 
 interface Props {
   column: IColumn;
@@ -20,12 +21,11 @@ interface Props {
   ) => void;
   createTaskDialog: boolean;
   setCreateTaskDialog: (show: boolean) => void;
-  addTaskInput: { title: string; description: string };
-  setAddTaskInput: React.Dispatch<
-    React.SetStateAction<{ title: string; description: string }>
-  >;
+  addTaskInput: ITask;
+  setAddTaskInput: React.Dispatch<React.SetStateAction<ITask>>;
   ID: string;
   setId: React.Dispatch<React.SetStateAction<string>>;
+  deleteColumn: (id: string) => void;
 }
 
 export const ColumnContainer: React.FC<Props> = ({
@@ -41,15 +41,33 @@ export const ColumnContainer: React.FC<Props> = ({
   setAddTaskInput,
   ID,
   setId,
+  deleteColumn,
 }) => {
   const [editMode, setEditMode] = useState(false);
+  const [showActionsModal, setShowActionsModal] = useState(false);
+  const [modalPosition, setModalPosition] = useState<{
+    top: number;
+    left: number;
+  }>({ top: 0, left: 0 });
+
+  const [selectedTask, setSelectedTask] = useState<ITask | null>(null);
+
+  const handleShowActionModal = (event: React.MouseEvent<HTMLElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    setModalPosition({
+      top: rect.bottom + window.scrollY,
+      left: rect.left + window.scrollX,
+    });
+    setShowActionsModal(true);
+  };
 
   const handleCancel = () => {
     setCreateTaskDialog(false);
-    setAddTaskInput({ title: "", description: "" });
+    setAddTaskInput({ id: "", columnID: "", title: "", description: "" });
   };
 
   const handleClick = (id: string) => {
+    setSelectedTask(null);
     setId(id);
     setCreateTaskDialog(true);
   };
@@ -79,6 +97,15 @@ export const ColumnContainer: React.FC<Props> = ({
     transform: CSS.Transform.toString(transform),
   };
 
+  const handleAddTask = () => {
+    setId(column.id);
+    setCreateTaskDialog(true);
+  };
+
+  const handleDeleteColumn = () => {
+    deleteColumn(column?.id);
+  };
+
   if (isDragging) {
     return (
       <div
@@ -98,12 +125,14 @@ export const ColumnContainer: React.FC<Props> = ({
       <div
         {...attributes}
         {...listeners}
-        onClick={() => {
-          setEditMode(true);
-        }}
-        className="p-spacing-s"
+        className="p-spacing-s w-full flex justify-between relative"
       >
-        <div className="">
+        <div
+          className="w-full"
+          onClick={() => {
+            setEditMode(true);
+          }}
+        >
           {!editMode && (
             <Typography.Title level={5} className="!p-0 !m-0">
               {column.title}
@@ -126,6 +155,19 @@ export const ColumnContainer: React.FC<Props> = ({
             />
           )}
         </div>
+        <MoreOutlined
+          className="cursor-pointer hover:bg-white p-spacing-xs rounded-lg transform rotate-90"
+          onClick={handleShowActionModal}
+        />
+        {showActionsModal && (
+          <ColumnsActionsModal
+            visible={showActionsModal}
+            onCancel={() => setShowActionsModal(false)}
+            position={modalPosition}
+            onAddTask={handleAddTask}
+            onDeleteColumn={handleDeleteColumn}
+          />
+        )}
       </div>
 
       <div className="flex flex-grow flex-col justify-start items-center gap-spacing-xs overflow-x-hidden overflow-y-auto mb-spacing-s">
@@ -135,6 +177,10 @@ export const ColumnContainer: React.FC<Props> = ({
             task={task}
             deleteTask={deleteTask}
             updateTask={updateTask}
+            onClick={() => {
+              setSelectedTask(task);
+              setCreateTaskDialog(true);
+            }}
           />
         ))}
       </div>
@@ -145,6 +191,7 @@ export const ColumnContainer: React.FC<Props> = ({
         onAdd={addTask}
         taskInput={addTaskInput}
         setTaskInput={setAddTaskInput}
+        selectedTask={selectedTask}
       />
 
       <div

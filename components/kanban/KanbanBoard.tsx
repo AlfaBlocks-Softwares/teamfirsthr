@@ -43,10 +43,11 @@ function KanbanBoard() {
   const [activeColumn, setActiveColumn] = useState<IColumn | null>(null);
   const [activeTask, setActiveTask] = useState<ITask | null>(null);
   const [createTaskDialog, setCreateTaskDialog] = useState(false);
-  const [addTaskInput, setAddTaskInput] = useState<{
-    title: string;
-    description: string;
-  }>({ title: "", description: "" });
+  const [addTaskInput, setAddTaskInput] = useState<ITask>({
+    id: "",
+    columnID: "",
+    title: "",
+  });
   const [ID, setId] = useState<string>("");
 
   const [newColumnTitle, setNewColumnTitle] = useState<string>("");
@@ -98,12 +99,23 @@ function KanbanBoard() {
       id: nanoid(),
       columnID: columnId,
       title: addTaskInput.title,
-      description: addTaskInput.description,
+      ...(addTaskInput?.description && {
+        description: addTaskInput?.description,
+      }),
+      ...(addTaskInput?.assignedTo && {
+        assignedTo: addTaskInput?.assignedTo,
+      }),
     };
 
     setTasks((prevTasks) => [...prevTasks, newTask]);
+    setAddTaskInput({
+      id: "",
+      columnID: "",
+      title: "",
+      description: "",
+      assignedTo: "",
+    });
     setCreateTaskDialog(false);
-    setAddTaskInput({ title: "", description: "" });
   };
 
   const deleteTask = useCallback((id: string) => {
@@ -127,6 +139,14 @@ function KanbanBoard() {
       prevColumns.map((col) => {
         if (col.id !== id) return col;
         return { ...col, title };
+      })
+    );
+  }, []);
+
+  const deleteColumn = useCallback((id: string) => {
+    setColumns((prevColumns) =>
+      prevColumns.filter((col) => {
+        return col?.id !== id;
       })
     );
   }, []);
@@ -233,6 +253,7 @@ function KanbanBoard() {
                 ID={ID}
                 setId={setId}
                 tasks={tasks.filter((task) => task.columnID === col.id)}
+                deleteColumn={deleteColumn}
               />
             ))}
 
@@ -261,7 +282,7 @@ function KanbanBoard() {
                       Add list
                     </Button>
                     <CloseOutlined
-                      className="cursor-pointer"
+                      className="cursor-pointer hover:bg-white p-spacing-xs rounded-lg"
                       onClick={cancelAddColumn}
                     />
                   </div>
@@ -288,6 +309,7 @@ function KanbanBoard() {
               tasks={tasks.filter((task) => task?.columnID === activeColumn.id)}
               ID={ID}
               setId={setId}
+              deleteColumn={deleteColumn}
             />
           )}
           {activeTask && (

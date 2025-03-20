@@ -2,7 +2,8 @@ export interface ITask {
   id: string;
   columnID: string;
   title: string;
-  description: string;
+  description?: string;
+  assignedTo?: string;
 }
 
 export interface IColumn {
