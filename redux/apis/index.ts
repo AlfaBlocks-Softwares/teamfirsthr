@@ -2,3 +2,4 @@ export * from "./auth";
 export * from "./user";
 export * from "./leave";
 export * from "./attendance";
+export * from "./kanban";

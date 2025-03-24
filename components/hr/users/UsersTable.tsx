@@ -76,11 +76,13 @@ const UsersTable = () => {
       title: "Name",
       key: "name",
       render: (_, record) => getFullName(record.first_name, record.last_name),
+      sorter: (a, b) => a?.first_name?.localeCompare(b?.first_name),
     },
     {
       title: "Email",
       dataIndex: "email",
       key: "email",
+      sorter: (a, b) => a?.email?.localeCompare(b?.email),
     },
     {
       title: "Department",
@@ -91,6 +93,7 @@ const UsersTable = () => {
       title: "Position",
       dataIndex: "position",
       key: "position",
+      sorter: (a, b) => a?.position?.localeCompare(b?.position),
     },
     {
       title: "Status",
@@ -107,6 +110,7 @@ const UsersTable = () => {
       dataIndex: "date_joined",
       key: "date_joined",
       render: (value) => dayjs(value).format("YYYY-MM-DD"),
+      sorter: (a, b) => a?.date_joined?.localeCompare(b?.date_joined),
     },
     {
       title: "Actions",

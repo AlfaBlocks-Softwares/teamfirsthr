@@ -17,21 +17,25 @@ const columns: TableProps<DataType>["columns"] = [
     title: "Name",
     dataIndex: "name",
     key: "name",
+    sorter: (a, b) => a?.name?.localeCompare(b?.name),
   },
   {
     title: "Department",
     dataIndex: "department",
     key: "department",
+    sorter: (a, b) => a?.department?.localeCompare(b?.department),
   },
   {
     title: "Check In",
     dataIndex: "checkin",
     key: "checkin",
+    sorter: (a, b) => a?.checkin?.localeCompare(b?.checkin),
   },
   {
     title: "Check Out",
     dataIndex: "checkout",
     key: "checkout",
+    sorter: (a, b) => a?.checkout?.localeCompare(b?.checkout),
   },
   {
     title: "Status",

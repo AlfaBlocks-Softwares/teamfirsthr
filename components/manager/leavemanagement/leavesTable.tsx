@@ -159,11 +159,22 @@ const LeaveManagementTable = () => {
       title: "Name",
       dataIndex: "name",
       key: "name",
+      sorter: (a, b) => a?.name?.localeCompare(b?.name),
+      // filterDropdown: () => (
+      //   <Search
+      //     placeholder="Search Department"
+      //     onSearch={handleSearch}
+      //     onChange={(e) => handleSearch(e.target.value)}
+      //     style={{ padding: 8 }}
+      //   />
+      // ),
+      // filterIcon: <SearchOutlined />,
     },
     {
       title: "Designation",
       dataIndex: "designation",
       key: "designation",
+      sorter: (a, b) => a?.designation?.localeCompare(b?.designation),
     },
     {
       title: "From",

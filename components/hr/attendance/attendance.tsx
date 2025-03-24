@@ -21,18 +21,22 @@ const UserAttendanceTable = () => {
       title: "Name",
       key: "name",
       render: () => `${user?.first_name} ${user?.last_name}`,
+      //@ts-ignore
+      sorter: (a, b) => a?.first_name?.localeCompare(b?.first_name),
     },
     {
       title: "Check In",
       dataIndex: "check_in",
       key: "check_in",
       render: (value) => moment(value).format("dddd, MMMM D, YYYY hh:mm A"),
+      sorter: (a, b) => a?.check_in?.localeCompare(b?.check_in),
     },
     {
       title: "Check Out",
       dataIndex: "check_out",
       key: "check_out",
       render: (value) => moment(value).format("dddd, MMMM D, YYYY hh:mm A"),
+      sorter: (a, b) => a?.check_out?.localeCompare(b?.check_out),
     },
   ];
 

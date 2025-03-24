@@ -16,11 +16,13 @@ const columns: TableProps<DataType>["columns"] = [
     title: "Name",
     dataIndex: "name",
     key: "name",
+    sorter: (a, b) => a?.name?.localeCompare(b?.name),
   },
   {
     title: "Age",
     dataIndex: "age",
     key: "age",
+    sorter: (a, b) => a.age - b.age,
   },
   {
     title: "Address",
