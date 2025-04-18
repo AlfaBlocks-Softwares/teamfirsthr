@@ -7,22 +7,32 @@ import { Typography } from "antd";
 import type { UploadFile } from "antd";
 import FileUploader from "@/components/ui/UploadFiles";
 import { leaveTypeOptions } from "@/constants/dashboard";
+import { useApplyForLeaveMutation } from "@/redux/apis";
+import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+dayjs.extend(customParseFormat);
 
 export default function EmployeeLeaveForm() {
   const [form] = Form.useForm();
   const [fileList, setFileList] = useState<UploadFile[]>([]);
+  const [applyForLeave, { isLoading }] = useApplyForLeaveMutation();
 
   const handleFileChange = (newFileList: UploadFile[]) => {
     setFileList(newFileList);
   };
 
-  const onFinish = (values: IEmployeeLeaveForm) => {
-    const formData = {
-      ...values,
-      attachments: fileList,
+  const onFinish = async (values: IEmployeeLeaveForm) => {
+    // const formData = {
+    //   ...values,
+    //   attachments: fileList,
+    // };
+
+    const payload = {
+      start_date: dayjs(values?.startDate)?.format("YYYY-MM-DD"),
+      end_date: dayjs(values?.endDate)?.format("YYYY-MM-DD"),
     };
 
-    console.log("Received values of form: ", formData);
+    await applyForLeave(payload);
   };
 
   return (
@@ -66,7 +76,6 @@ export default function EmployeeLeaveForm() {
               name="startDate"
               className="w-full"
               format="YYYY-MM-DD"
-              onChange={(_, formatted) => console.log(formatted)}
             />
           </Form.Item>
 
@@ -76,12 +85,7 @@ export default function EmployeeLeaveForm() {
             className="!text-black !font-bold"
             rules={[{ required: true, message: "Please select end date" }]}
           >
-            <DatePicker
-              name="endDate"
-              className="w-full"
-              format="YYYY-MM-DD"
-              onChange={(_, formatted) => console.log(formatted)}
-            />
+            <DatePicker name="endDate" className="w-full" format="YYYY-MM-DD" />
           </Form.Item>
 
           <Form.Item
@@ -110,7 +114,7 @@ export default function EmployeeLeaveForm() {
         </div>
 
         <div className="mt-spacing-m">
-          <Button htmlType="submit" className="!w-max">
+          <Button htmlType="submit" className="!w-max" loading={isLoading}>
             Apply Leave
           </Button>
         </div>
