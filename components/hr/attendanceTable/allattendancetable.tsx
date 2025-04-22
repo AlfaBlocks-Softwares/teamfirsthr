@@ -88,7 +88,7 @@ const HRDashboardAttendanceTable = () => {
     dayjs()?.format("YYYY-MM-DD")
   );
   const [searchText, setSearchText] = useState<string>("");
-  const { data, isLoading } = useGetAllUsersAttendanceQuery({
+  const { isLoading } = useGetAllUsersAttendanceQuery({
     date: selectedDate,
   });
 

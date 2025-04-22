@@ -14,6 +14,7 @@ dayjs.extend(customParseFormat);
 
 export default function EmployeeLeaveForm() {
   const [form] = Form.useForm();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [applyForLeave, { isLoading }] = useApplyForLeaveMutation();
 

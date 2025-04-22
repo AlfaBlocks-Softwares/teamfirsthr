@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 "use client";
 import { Table, Typography, Spin } from "antd";
 import type { TableProps } from "antd";
