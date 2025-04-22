@@ -4,5 +4,5 @@ export interface ILeaveDataType {
   designation: string;
   from: string;
   to: string;
-  status: string;
+  status: boolean;
 }

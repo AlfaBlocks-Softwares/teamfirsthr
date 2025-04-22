@@ -43,7 +43,14 @@ export const leaveAPI = createApi({
     }),
     getAllLeaves: builder.query<any, any>({
       query: () => ({
-        url: `v1/leaves/`,
+        url: `v1/leave/`,
+        method: "GET",
+      }),
+      transformResponse: (response: any) => response,
+    }),
+    getAllUnapprovedLeaves: builder.query<any, void>({
+      query: () => ({
+        url: `v1/leave/latest`,
         method: "GET",
       }),
       transformResponse: (response: any) => response,
@@ -54,5 +61,6 @@ export const leaveAPI = createApi({
 export const {
   useGetAllLeavesQuery,
   useUpdateLeaveStatusMutation,
+  useGetAllUnapprovedLeavesQuery,
   useApplyForLeaveMutation,
 } = leaveAPI;

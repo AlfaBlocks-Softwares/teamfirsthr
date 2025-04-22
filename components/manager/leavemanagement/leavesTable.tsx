@@ -1,153 +1,71 @@
 "use client";
 import React, { useCallback, useState } from "react";
-import { Table, Tag, Typography, Dropdown } from "antd";
+import { Table, Tag, Typography, Dropdown, Spin } from "antd";
 import type { TableProps } from "antd";
-import type { MenuProps } from "antd";
-import { MoreOutlined } from "@ant-design/icons";
+// import type { MenuProps } from "antd";
+import { LoadingOutlined, MoreOutlined } from "@ant-design/icons";
 import { ILeaveDataType } from "@/types";
 import LeaveDetailModal from "./LeaveDetailModal";
+import { useGetAllUnapprovedLeavesQuery } from "@/redux/apis";
+import dayjs from "dayjs";
 
 const LeaveManagementTable = () => {
-  const [data, setData] = useState<ILeaveDataType[]>([
-    {
-      key: "1",
-      name: "John Brown",
-      designation: "Developer",
-      from: "2025-02-01",
-      to: "2025-02-10",
-      status: "pending",
-    },
-    {
-      key: "2",
-      name: "Jim Green",
-      designation: "Manager",
-      from: "2025-02-05",
-      to: "2025-02-12",
-      status: "approved",
-    },
-    {
-      key: "3",
-      name: "Joe Black",
-      designation: "Developer",
-      from: "2025-02-15",
-      to: "2025-02-20",
-      status: "rejected",
-    },
-    {
-      key: "4",
-      name: "John Brown",
-      designation: "Developer",
-      from: "2025-03-01",
-      to: "2025-03-10",
-      status: "pending",
-    },
-    {
-      key: "5",
-      name: "Jim Green",
-      designation: "Manager",
-      from: "2025-03-05",
-      to: "2025-03-12",
-      status: "approved",
-    },
-    {
-      key: "6",
-      name: "Joe Black",
-      designation: "Developer",
-      from: "2025-03-10",
-      to: "2025-03-20",
-      status: "pending",
-    },
-    {
-      key: "7",
-      name: "Alice White",
-      designation: "Designer",
-      from: "2025-03-15",
-      to: "2025-03-22",
-      status: "pending",
-    },
-    {
-      key: "8",
-      name: "Bob Black",
-      designation: "Developer",
-      from: "2025-03-25",
-      to: "2025-03-30",
-      status: "rejected",
-    },
-    {
-      key: "9",
-      name: "Charlie Brown",
-      designation: "Team Lead",
-      from: "2025-02-10",
-      to: "2025-02-15",
-      status: "approved",
-    },
-    {
-      key: "10",
-      name: "Daisy Green",
-      designation: "Developer",
-      from: "2025-03-05",
-      to: "2025-03-12",
-      status: "pending",
-    },
-  ]);
-
+  const { data, isLoading } = useGetAllUnapprovedLeavesQuery();
   const [showModal, setShowModal] = useState<boolean>(false);
   const [selectedRow, setSelectedRow] = useState<ILeaveDataType | null>(null);
 
-  const updateLeaveStatus = (key: string, newStatus: string): void => {
-    setData(
-      data.map((item) =>
-        item.key === key ? { ...item, status: newStatus } : item
-      )
-    );
+  // const updateLeaveStatus = (key: string, newStatus: boolean): void => {
+  //   // setData(
+  //   //   data.map((item) =>
+  //   //     item.key === key ? { ...item, status: newStatus } : item
+  //   //   )
+  //   // );
 
-    if (selectedRow && selectedRow.key === key) {
-      setSelectedRow({ ...selectedRow, status: newStatus });
-    }
-  };
+  //   if (selectedRow && selectedRow.key === key) {
+  //     setSelectedRow({ ...selectedRow, status: newStatus });
+  //   }
+  // };
 
-  const handleMenuClick = (
-    e: { key: string },
-    record: ILeaveDataType
-  ): void => {
-    updateLeaveStatus(record.key, e.key);
-  };
+  // const handleMenuClick = (
+  //   e: { key: string },
+  //   record: ILeaveDataType
+  // ): void => {
+  //   // updateLeaveStatus(record.key, e.key);
+  // };
 
-  const getMenuProps = (
-    record: ILeaveDataType
-  ): {
-    items: MenuProps["items"];
-    onClick: (info: { key: string }) => void;
-  } => {
-    const items: MenuProps["items"] = [
-      {
-        label: "Approved",
-        key: "approved",
-      },
-      {
-        label: "Rejected",
-        key: "rejected",
-      },
-    ];
+  // const getMenuProps = (
+  //   record: ILeaveDataType
+  // ): {
+  //   items: MenuProps["items"];
+  //   onClick: (info: { key: string }) => void;
+  // } => {
+  //   const items: MenuProps["items"] = [
+  //     {
+  //       label: "Approved",
+  //       key: "approved",
+  //     },
+  //     {
+  //       label: "Rejected",
+  //       key: "rejected",
+  //     },
+  //   ];
 
-    return {
-      items,
-      onClick: (info) => handleMenuClick(info, record),
-    };
-  };
+  //   return {
+  //     items,
+  //     onClick: (info) => return,
+  //   };
+  // };
 
   const handleRowClick = (record: ILeaveDataType): void => {
     setSelectedRow(record);
     setShowModal(true);
   };
 
-  const getStatusColor = (status: string): string => {
-    switch (status.toLowerCase()) {
-      case "approved":
+  const getStatusColor = (status: boolean): string => {
+    switch (status) {
+      case true:
         return "success";
-      case "rejected":
-        return "error";
-      case "pending":
+      case false:
         return "warning";
       default:
         return "default";
@@ -155,67 +73,75 @@ const LeaveManagementTable = () => {
   };
 
   const columns: TableProps<ILeaveDataType>["columns"] = [
+    // {
+    //   title: "Name",
+    //   dataIndex: "name",
+    //   key: "name",
+    //   sorter: (a, b) => a?.name?.localeCompare(b?.name),
+    //   // filterDropdown: () => (
+    //   //   <Search
+    //   //     placeholder="Search Department"
+    //   //     onSearch={handleSearch}
+    //   //     onChange={(e) => handleSearch(e.target.value)}
+    //   //     style={{ padding: 8 }}
+    //   //   />
+    //   // ),
+    //   // filterIcon: <SearchOutlined />,
+    // },
+    // {
+    //   title: "Designation",
+    //   dataIndex: "designation",
+    //   key: "designation",
+    //   sorter: (a, b) => a?.designation?.localeCompare(b?.designation),
+    // },
     {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
-      sorter: (a, b) => a?.name?.localeCompare(b?.name),
-      // filterDropdown: () => (
-      //   <Search
-      //     placeholder="Search Department"
-      //     onSearch={handleSearch}
-      //     onChange={(e) => handleSearch(e.target.value)}
-      //     style={{ padding: 8 }}
-      //   />
-      // ),
-      // filterIcon: <SearchOutlined />,
+      title: "Start Date",
+      dataIndex: "start_date",
+      key: "start_date",
+      render: (value) => dayjs(value).format("YYYY-MM-DD"),
     },
     {
-      title: "Designation",
-      dataIndex: "designation",
-      key: "designation",
-      sorter: (a, b) => a?.designation?.localeCompare(b?.designation),
+      title: "End Date",
+      dataIndex: "end_date",
+      key: "end_date",
+      render: (value) => dayjs(value).format("YYYY-MM-DD"),
     },
     {
-      title: "From",
-      dataIndex: "from",
-      key: "from",
-    },
-    {
-      title: "To",
-      dataIndex: "to",
-      key: "to",
-    },
-    {
-      title: "Status",
-      key: "status",
-      dataIndex: "status",
+      title: "HR Approval",
+      key: "hr_approval",
+      dataIndex: "hr_approval",
       render: (_, { status }) => (
-        <Tag color={getStatusColor(status)} key={status}>
-          {status.toUpperCase()}
-        </Tag>
+        <Tag color={getStatusColor(status)}>{status}</Tag>
+      ),
+    },
+    {
+      title: "Manager Approval",
+      key: "manager_approval",
+      dataIndex: "manager_approval",
+      render: (_, { status }) => (
+        <Tag color={getStatusColor(status)}>{status}</Tag>
       ),
     },
     {
       title: "Actions",
       key: "actions",
-      render: (_, record) => {
-        return record.status === "pending" ? (
+      render: () => {
+        return (
           <div onClick={(e) => e.stopPropagation()}>
-            <Dropdown menu={getMenuProps(record)} trigger={["click"]}>
+            <Dropdown trigger={["click"]}>
               <MoreOutlined />
             </Dropdown>
           </div>
-        ) : null;
+        );
       },
     },
   ];
 
-  const handleModalStatusUpdate = (newStatus: string): void => {
-    if (selectedRow) {
-      updateLeaveStatus(selectedRow.key, newStatus);
-    }
-  };
+  // const handleModalStatusUpdate = (newStatus: boolean): void => {
+  //   if (selectedRow) {
+  //     updateLeaveStatus(selectedRow.key, newStatus);
+  //   }
+  // };
 
   const hideModal = useCallback(() => {
     setShowModal(false);
@@ -224,20 +150,31 @@ const LeaveManagementTable = () => {
   return (
     <section className="">
       <Typography.Title level={3}>Leave Management</Typography.Title>
-      <Table<ILeaveDataType>
-        columns={columns}
-        dataSource={data}
-        pagination={{ pageSize: 8 }}
-        onRow={(record) => ({
-          onClick: () => handleRowClick(record),
-        })}
-      />
+      {isLoading ? (
+        <Spin
+          indicator={<LoadingOutlined spin />}
+          size="large"
+          className="!w-full !h-full"
+        />
+      ) : (
+        <Table<ILeaveDataType>
+          columns={columns}
+          dataSource={data?.data}
+          pagination={{ pageSize: 8 }}
+          rowKey="_id"
+          onRow={(record) => ({
+            onClick: () => handleRowClick(record),
+          })}
+        />
+      )}
       {showModal && (
         <LeaveDetailModal
           visible={showModal}
           onCancel={hideModal}
           leaveData={selectedRow}
-          handleModalStatusUpdate={handleModalStatusUpdate}
+          handleModalStatusUpdate={function (): void {
+            throw new Error("Function not implemented.");
+          }} // handleModalStatusUpdate={handleModalStatusUpdate}
         />
       )}
     </section>

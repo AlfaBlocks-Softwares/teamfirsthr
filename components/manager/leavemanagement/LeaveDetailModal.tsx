@@ -25,7 +25,7 @@ const LeaveDetailModal: React.FC<Props> = ({
       centered
       footer={
         <div className="flex justify-end items-center gap-spacing-xs">
-          {leaveData?.status === "pending" && (
+          {!leaveData?.status && (
             <>
               <Button
                 key="approve"
