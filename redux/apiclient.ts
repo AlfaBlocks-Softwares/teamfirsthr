@@ -2,7 +2,7 @@
 import axios from "axios";
 
 export const API = axios.create({
-  baseURL: "http://localhost:5001/api/",
+  baseURL: "https://9r74knm6-5001.asse.devtunnels.ms/api/",
   headers: { "Content-Type": "application/json" },
 });
 
