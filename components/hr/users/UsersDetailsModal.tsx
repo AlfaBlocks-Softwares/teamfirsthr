@@ -20,6 +20,7 @@ const UsersDetailsModal: React.FC<Props> = ({ visible, setVisible, user }) => {
       onCancel={setVisible}
       footer={null}
       width={800}
+      className=""
     >
       {user ? (
         <div className="mt-spacing-l max-h-[600px] overflow-y-scroll">

@@ -75,7 +75,7 @@ export default function EmployeeLeaveForm() {
           >
             <DatePicker
               name="startDate"
-              className="w-full"
+              className="w-full !font-normal"
               format="YYYY-MM-DD"
             />
           </Form.Item>
@@ -86,7 +86,11 @@ export default function EmployeeLeaveForm() {
             className="!text-black !font-bold"
             rules={[{ required: true, message: "Please select end date" }]}
           >
-            <DatePicker name="endDate" className="w-full" format="YYYY-MM-DD" />
+            <DatePicker
+              name="endDate"
+              className="w-full !font-normal"
+              format="YYYY-MM-DD"
+            />
           </Form.Item>
 
           <Form.Item
@@ -99,6 +103,7 @@ export default function EmployeeLeaveForm() {
               name="reason"
               rows={6}
               placeholder="Reason for leave"
+              className="!font-normal"
             />
           </Form.Item>
 

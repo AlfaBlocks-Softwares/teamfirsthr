@@ -29,7 +29,7 @@ export default function CreateNewUserForm() {
         name="signup"
         initialValues={{ remember: true }}
         onFinish={onFinish}
-        className="!w-full !h-full !p-spacing-l"
+        className="!w-full !h-full"
         layout="vertical"
       >
         <div className="w-full !grid !grid-cols-2 justify-start items-start gap-spacing-m">
@@ -39,7 +39,10 @@ export default function CreateNewUserForm() {
             className="!text-black !font-bold"
             rules={[{ required: true, message: "First name is required" }]}
           >
-            <Input placeholder="Enter your first name" className="!h-[40px] " />
+            <Input
+              placeholder="Enter your first name"
+              className="!h-[40px] !font-normal"
+            />
           </Form.Item>
           <Form.Item
             label="Last Name"
@@ -47,7 +50,10 @@ export default function CreateNewUserForm() {
             className="!text-black !font-bold"
             rules={[{ required: true, message: "Last name is required" }]}
           >
-            <Input placeholder="Enter your last name" className="!h-[40px] " />
+            <Input
+              placeholder="Enter your last name"
+              className="!h-[40px] !font-normal"
+            />
           </Form.Item>
           <Form.Item
             label="Email"
@@ -60,7 +66,7 @@ export default function CreateNewUserForm() {
             <Input
               type="email"
               placeholder="Enter your email"
-              className="!h-[40px] "
+              className="!h-[40px] !font-normal"
             />
           </Form.Item>
           <Form.Item
@@ -69,7 +75,7 @@ export default function CreateNewUserForm() {
             className="!text-black !font-bold"
             rules={[{ required: true, message: "Position is required" }]}
           >
-            <Input placeholder="position" className="!h-[40px] " />
+            <Input placeholder="position" className="!h-[40px] !font-normal" />
           </Form.Item>
           <Form.Item
             label="Department"
@@ -80,7 +86,7 @@ export default function CreateNewUserForm() {
             <Select
               placeholder="Select department"
               options={DepartmentOptions}
-              className="!h-[40px]"
+              className="!h-[40px] !font-normal"
             />
           </Form.Item>
           <Form.Item
@@ -92,7 +98,7 @@ export default function CreateNewUserForm() {
             <Select
               placeholder="Select role"
               options={ROLEOptions}
-              className="!h-[40px]"
+              className="!h-[40px] !font-normal"
             />
           </Form.Item>
           <Form.Item
@@ -100,7 +106,7 @@ export default function CreateNewUserForm() {
             name="company"
             className="!text-black !font-bold"
           >
-            <Input placeholder="company" className="!h-[40px] " />
+            <Input placeholder="company" className="!h-[40px] !font-normal" />
           </Form.Item>
           <Form.Item
             label="Marital Status"
@@ -111,7 +117,7 @@ export default function CreateNewUserForm() {
             <Select
               placeholder="Select marital status"
               options={MaritalStatusOptions}
-              className="!h-[40px]"
+              className="!h-[40px] !font-normal"
             />
           </Form.Item>
           <Form.Item
@@ -123,7 +129,7 @@ export default function CreateNewUserForm() {
             <Select
               placeholder="Select gender"
               options={GenderOptions}
-              className="!h-[40px]"
+              className="!h-[40px] !font-normal"
             />
           </Form.Item>
 
@@ -133,7 +139,10 @@ export default function CreateNewUserForm() {
             className="!text-black !font-bold"
             rules={[{ required: true, message: "Date of birth is required" }]}
           >
-            <DatePicker name="date_of_birth" className="!w-full !h-[40px]" />
+            <DatePicker
+              name="date_of_birth"
+              className="!w-full !h-[40px] !font-normal"
+            />
           </Form.Item>
           <Form.Item
             label="Phone Number"
@@ -141,7 +150,10 @@ export default function CreateNewUserForm() {
             className="!text-black !font-bold"
             rules={[{ required: true, message: "Phone is required" }]}
           >
-            <Input placeholder="Phone Number" className="!h-[40px] " />
+            <Input
+              placeholder="Phone Number"
+              className="!h-[40px] !font-normal"
+            />
           </Form.Item>
           <Form.Item
             label="Salary"
@@ -149,7 +161,7 @@ export default function CreateNewUserForm() {
             className="!text-black !font-bold"
             rules={[{ required: true, message: "Salary is required" }]}
           >
-            <Input placeholder="salary" className="!h-[40px] " />
+            <Input placeholder="salary" className="!h-[40px] !font-normal" />
           </Form.Item>
           <Form.Item
             label="Address"
@@ -157,7 +169,7 @@ export default function CreateNewUserForm() {
             className="!text-black !font-bold"
             rules={[{ required: true, message: "Address is required" }]}
           >
-            <Input placeholder="Address" className="!h-[40px] " />
+            <Input placeholder="Address" className="!h-[40px] !font-normal" />
           </Form.Item>
           <Form.Item
             label="Employment Status"
@@ -170,7 +182,7 @@ export default function CreateNewUserForm() {
             <Select
               placeholder="Select employement status"
               options={EmployementStatusOptions}
-              className="!h-[40px]"
+              className="!h-[40px] !font-normal"
             />
           </Form.Item>
           <Form.Item
@@ -179,7 +191,10 @@ export default function CreateNewUserForm() {
             className="!text-black !font-bold"
             rules={[{ required: true, message: "Date Joined is required" }]}
           >
-            <DatePicker name="date_joined" className="!w-full !h-[40px]" />
+            <DatePicker
+              name="date_joined"
+              className="!w-full !h-[40px] !font-normal"
+            />
           </Form.Item>
           <Form.Item
             label="Manager"
@@ -187,7 +202,7 @@ export default function CreateNewUserForm() {
             className="!text-black !font-bold"
             rules={[{ required: true, message: "Manager is required" }]}
           >
-            <Input placeholder="Manager" className="!h-[40px] " />
+            <Input placeholder="Manager" className="!h-[40px] !font-normal" />
           </Form.Item>
           <Form.Item
             label="Emergency Contact Name"
@@ -199,7 +214,7 @@ export default function CreateNewUserForm() {
           >
             <Input
               placeholder="Enter your emergency contact name"
-              className="!h-[40px] "
+              className="!h-[40px] !font-normal"
             />
           </Form.Item>
           <Form.Item
@@ -210,13 +225,13 @@ export default function CreateNewUserForm() {
           >
             <Input
               placeholder="Enter your emergency phone number"
-              className="!h-[40px] "
+              className="!h-[40px] !font-normal"
             />
           </Form.Item>
           <Form.Item
             label="Emergency Contact Relation"
             name="emergency_contact"
-            className="!text-black !font-bold"
+            className="!text-black !font-bold "
             rules={[
               {
                 required: true,
@@ -226,7 +241,7 @@ export default function CreateNewUserForm() {
           >
             <Input
               placeholder="Enter your emergency contact relation"
-              className="!h-[40px] "
+              className="!h-[40px] !font-normal"
             />
           </Form.Item>
         </div>

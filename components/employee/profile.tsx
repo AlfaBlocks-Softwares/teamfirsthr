@@ -88,10 +88,16 @@ export default function EmployeeProfile() {
         layout="vertical"
       >
         <div className="w-full flex flex-col gap-spacing-xs">
-          <Typography.Title level={2} className="!font-bold !p-0 !m-0">
+          <Typography.Title
+            level={2}
+            className="!font-bold !p-0 !m-0 !text-[24px]"
+          >
             Settings
           </Typography.Title>
-          <Typography.Title level={5} className="!font-semibold  !p-0 !m-0">
+          <Typography.Title
+            level={5}
+            className="!font-semibold  !p-0 !m-0 !text-[16px] !text-muted"
+          >
             Manage your account profile
           </Typography.Title>
         </div>
@@ -149,7 +155,10 @@ export default function EmployeeProfile() {
           name="first_name"
           className="!text-black !font-bold"
         >
-          <Input placeholder="Enter your first name" className="!h-[40px] " />
+          <Input
+            placeholder="Enter your first name"
+            className="!h-[40px] !font-normal"
+          />
         </Form.Item>
 
         <Form.Item
@@ -157,7 +166,10 @@ export default function EmployeeProfile() {
           name="last_name"
           className="!text-black !font-bold"
         >
-          <Input placeholder="Enter your last name" className="!h-[40px] " />
+          <Input
+            placeholder="Enter your last name"
+            className="!h-[40px] !font-normal"
+          />
         </Form.Item>
 
         <Form.Item
@@ -168,7 +180,7 @@ export default function EmployeeProfile() {
           <Input
             type="email"
             placeholder="Enter your email"
-            className="!h-[40px] "
+            className="!h-[40px] !font-normal"
           />
         </Form.Item>
 
@@ -177,7 +189,7 @@ export default function EmployeeProfile() {
           name="position"
           className="!text-black !font-bold"
         >
-          <Input placeholder="" className="!h-[40px] " disabled />
+          <Input placeholder="" className="!h-[40px] !font-normal" disabled />
         </Form.Item>
 
         <Form.Item
@@ -185,11 +197,19 @@ export default function EmployeeProfile() {
           name="department"
           className="!text-black !font-bold"
         >
-          <Input placeholder="department" className="!h-[40px] " disabled />
+          <Input
+            placeholder="department"
+            className="!h-[40px] !font-normal"
+            disabled
+          />
         </Form.Item>
 
         <Form.Item label="Role" name="role" className="!text-black !font-bold">
-          <Input placeholder="role" className="!h-[40px] " disabled />
+          <Input
+            placeholder="role"
+            className="!h-[40px] !font-normal"
+            disabled
+          />
         </Form.Item>
 
         <Form.Item
@@ -197,7 +217,11 @@ export default function EmployeeProfile() {
           name="company"
           className="!text-black !font-bold"
         >
-          <Input placeholder="company" className="!h-[40px] " disabled />
+          <Input
+            placeholder="company"
+            className="!h-[40px] !font-normal"
+            disabled
+          />
         </Form.Item>
 
         <Form.Item
@@ -208,7 +232,7 @@ export default function EmployeeProfile() {
           <Select
             placeholder="Select gender"
             options={GenderOptions}
-            className="!h-[40px]"
+            className="!h-[40px] !font-normal"
           />
         </Form.Item>
 
@@ -220,7 +244,7 @@ export default function EmployeeProfile() {
           <Select
             placeholder="Select marital status"
             options={MaritalStatusOptions}
-            className="!h-[40px]"
+            className="!h-[40px] !font-normal"
           />
         </Form.Item>
 
@@ -229,7 +253,10 @@ export default function EmployeeProfile() {
           name="date_of_birth"
           className="!text-black !font-bold"
         >
-          <DatePicker className="!w-full !h-[40px]" format={"DD-MM-YYYY"} />
+          <DatePicker
+            className="!w-full !h-[40px] !font-normal"
+            format={"DD-MM-YYYY"}
+          />
         </Form.Item>
 
         <Form.Item
@@ -237,7 +264,10 @@ export default function EmployeeProfile() {
           name="phone_number"
           className="!text-black !font-bold"
         >
-          <Input placeholder="Phone Number" className="!h-[40px] " />
+          <Input
+            placeholder="Phone Number"
+            className="!h-[40px] !font-normal"
+          />
         </Form.Item>
 
         <Form.Item
@@ -245,7 +275,11 @@ export default function EmployeeProfile() {
           name="salary"
           className="!text-black !font-bold"
         >
-          <Input placeholder="salary" className="!h-[40px] " disabled />
+          <Input
+            placeholder="salary"
+            className="!h-[40px] !font-normal"
+            disabled
+          />
         </Form.Item>
 
         <Form.Item
@@ -253,7 +287,7 @@ export default function EmployeeProfile() {
           name="address"
           className="!text-black !font-bold"
         >
-          <Input placeholder="Address" className="!h-[40px] " />
+          <Input placeholder="Address" className="!h-[40px] !font-normal" />
         </Form.Item>
 
         <Form.Item
@@ -263,7 +297,7 @@ export default function EmployeeProfile() {
         >
           <Input
             placeholder="Employment Status"
-            className="!h-[40px] "
+            className="!h-[40px] !font-normal"
             disabled
           />
         </Form.Item>
@@ -275,7 +309,7 @@ export default function EmployeeProfile() {
         >
           <DatePicker
             placeholder="Date Joined"
-            className="!h-[40px] !w-full"
+            className="!h-[40px] !w-full !font-normal"
             disabled
             format={"DD-MM-YYYY"}
           />
@@ -286,7 +320,7 @@ export default function EmployeeProfile() {
           name="manager"
           className="!text-black !font-bold"
         >
-          <Input className="!h-[40px] " disabled />
+          <Input className="!h-[40px] !font-normal" disabled />
         </Form.Item>
 
         <Form.Item
@@ -296,7 +330,7 @@ export default function EmployeeProfile() {
         >
           <Input
             placeholder="Enter your emergency contact name"
-            className="!h-[40px] "
+            className="!h-[40px] !font-normal"
           />
         </Form.Item>
 
@@ -307,7 +341,7 @@ export default function EmployeeProfile() {
         >
           <Input
             placeholder="Enter your emergency phone number"
-            className="!h-[40px] "
+            className="!h-[40px] !font-normal"
           />
         </Form.Item>
 
@@ -319,7 +353,7 @@ export default function EmployeeProfile() {
           <Input
             type="text"
             placeholder="Enter your emergency contact relation"
-            className="!h-[40px] "
+            className="!h-[40px] !font-normal"
           />
         </Form.Item>
       </Form>

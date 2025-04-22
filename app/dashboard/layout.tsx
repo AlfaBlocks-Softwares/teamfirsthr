@@ -86,10 +86,16 @@ const MainLayout: React.FC<Props> = ({ children }) => {
               style={{ fontSize: "20px", marginRight: "1rem" }}
               onClick={showNavbar}
             />
-            <Typography.Title level={2} className="!m-0 !p-0 !font-medium">
+            <Typography.Title
+              level={2}
+              className="!m-0 !p-0 !font-medium !text-[34px]"
+            >
               Good Morning,
             </Typography.Title>
-            <Typography.Title level={2} className="!m-0 !p-0 !font-medium">
+            <Typography.Title
+              level={2}
+              className="!m-0 !p-0 !font-medium !text-[34px]"
+            >
               {user?.first_name ?? ""}
             </Typography.Title>
           </div>

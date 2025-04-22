@@ -3,12 +3,12 @@
 @tailwind utilities;
 
 :root {
-  --bg-primary: #051984;
-  --bg-secondary: #f0f9ff;
+  --bg-primary: #1d2d44;
+  --bg-secondary: #f0ebd8;
   --bg-muted: gray;
 
-  --black: black;
-  --primary: #051984;
+  --black: #211e21;
+  --primary: #1d2d44;
   --secondary: white;
   --muted: gray;
   --caption: gray;

@@ -8,7 +8,7 @@ const EmployeePersonalInformation = () => {
   const user = useSelector(selectUser);
 
   return (
-    <div className="h-max w-full flex justify-between items-start flex-wrap">
+    <div className="h-max w-full flex justify-between items-start flex-wrap text-black">
       <div className="flex flex-col gap-spacing-xs">
         <Typography.Title level={3} className="!p-0 !m-0">
           {user?.first_name ?? ""}
@@ -18,7 +18,7 @@ const EmployeePersonalInformation = () => {
         </Typography.Title>
       </div>
       <div className="flex flex-col gap-spacing-xxs">
-        <Typography.Title level={3} className="!p-0 !m-0">
+        <Typography.Title level={3} className="!p-0 !m-0 !text-muted">
           {user?.department ?? ""}
         </Typography.Title>
       </div>

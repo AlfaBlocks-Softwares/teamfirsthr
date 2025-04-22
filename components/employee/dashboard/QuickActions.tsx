@@ -58,7 +58,7 @@ const EmployeeQuickActions = () => {
 
   return (
     <section className="w-full grid grid-cols-1 lg:grid-cols-2 gap-spacing-l">
-      <div className="h-[150px] bg-yellow-400 rounded-lg flex flex-col justify-start items-start gap-spacing-xxs p-spacing-s">
+      <div className="h-[150px] bg-[#3e5c76] rounded-lg flex flex-col justify-start items-start gap-spacing-xxs p-spacing-s">
         <Button onClick={handleSignIn} disabled={isSignInDisabled}>
           Sign In
         </Button>
@@ -74,7 +74,7 @@ const EmployeeQuickActions = () => {
           </Typography.Title>
         )}
       </div>
-      <div className="h-[150px] bg-yellow-400 rounded-lg flex flex-col justify-start items-start gap-spacing-xxs p-spacing-s">
+      <div className="h-[150px] bg-[#3e5c76] rounded-lg flex flex-col justify-start items-start gap-spacing-xxs p-spacing-s">
         <Button onClick={handleSignOut} disabled={isSignOutDisabled}>
           Sign Out
         </Button>
@@ -91,7 +91,7 @@ const EmployeeQuickActions = () => {
         )}
       </div>
 
-      <div className="lg:col-span-2 h-[150px] bg-yellow-400 rounded-lg flex flex-col justify-start items-start gap-spacing-xxs p-spacing-s">
+      <div className="lg:col-span-2 h-[150px] bg-[#3e5c76] rounded-lg flex flex-col justify-start items-start gap-spacing-xxs p-spacing-s">
         <Link href={"/dashboard/leave"}>
           <Button>Apply for a leave</Button>
         </Link>

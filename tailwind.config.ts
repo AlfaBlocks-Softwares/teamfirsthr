@@ -21,6 +21,7 @@ export default {
         muted: "var(--muted)",
         destructive: "var(--destructive)",
         caption: "var(--caption)",
+        black: "var(--black)",
       },
       borderColor: {
         primary: "var(--primary)",
